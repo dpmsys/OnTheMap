@@ -57,6 +57,7 @@
 		06605D0420E1158000F75C74 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06605D0320E1158000F75C74 /* MapViewController.swift */; };
 		06A339DD20E978C8002A7438 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339DC20E978C8002A7438 /* AddLocationViewController.swift */; };
 		06A339DF20E99380002A7438 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339DE20E99380002A7438 /* GCDBlackBox.swift */; };
+		06A339E120EA4CF6002A7438 /* MAPConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E020EA4CF6002A7438 /* MAPConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		06605D0320E1158000F75C74 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		06A339DC20E978C8002A7438 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		06A339DE20E99380002A7438 /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		06A339E020EA4CF6002A7438 /* MAPConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAPConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,7 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				064BA83E20E26465009DF685 /* OnTheMap.swift */,
-				06605CC020E047D400F75C74 /* Clients */,
+				06605CC020E047D400F75C74 /* MAPClient */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,13 +295,14 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		06605CC020E047D400F75C74 /* Clients */ = {
+		06605CC020E047D400F75C74 /* MAPClient */ = {
 			isa = PBXGroup;
 			children = (
 				064BA84020E26C23009DF685 /* MapConstants.swift */,
 				064BA84220E2F791009DF685 /* MAPClient.swift */,
+				06A339E020EA4CF6002A7438 /* MAPConvenience.swift */,
 			);
-			path = Clients;
+			path = MAPClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,6 +481,7 @@
 				06605D0420E1158000F75C74 /* MapViewController.swift in Sources */,
 				064BA84120E26C23009DF685 /* MapConstants.swift in Sources */,
 				064BA84320E2F791009DF685 /* MAPClient.swift in Sources */,
+				06A339E120EA4CF6002A7438 /* MAPConvenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

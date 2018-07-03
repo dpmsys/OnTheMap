@@ -15,9 +15,11 @@ extension MAPClient {
         static let APIScheme = "https"
         static let APIHost = "parse.udacity.com"
         static let AuthHost = "www.udacity.com"
+        static let APIPath = ""
     }
 
     struct Methods {
+        static let Users = "/api/users"
         static let Session = "/api/session"
         static let StudentLocation = "/parse/classes/StudentLocation"
     }
@@ -32,6 +34,10 @@ extension MAPClient {
     }
 
     struct JSONResponseKeys {
+        static let Account = "account"
+        static let AccountKey = "key"
+        static let Session = "session"
+        static let SessionID = "id"
         static let StudentCreated = "createdAt"
         static let StudentFirstName = "firstName"
         static let StudentLastName = "lastName"
