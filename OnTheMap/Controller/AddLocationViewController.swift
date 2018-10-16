@@ -13,9 +13,6 @@ class AddLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        performUIUpdatesOnMain {
-            self.navigationItem.leftBarButtonItem?.title = "Cancel"
-        }
+        self.navigationItem.leftBarButtonItem?.title = "Cancel"
     }
 }

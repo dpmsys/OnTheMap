@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		064BA83D20E2638E009DF685 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA83C20E2638E009DF685 /* MapTableViewController.swift */; };
 		064BA83F20E26465009DF685 /* OnTheMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA83E20E26465009DF685 /* OnTheMap.swift */; };
-		064BA84120E26C23009DF685 /* MapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84020E26C23009DF685 /* MapConstants.swift */; };
-		064BA84320E2F791009DF685 /* MAPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84220E2F791009DF685 /* MAPClient.swift */; };
+		064BA84120E26C23009DF685 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84020E26C23009DF685 /* UdacityConstants.swift */; };
+		064BA84320E2F791009DF685 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84220E2F791009DF685 /* UdacityClient.swift */; };
 		064BA84520E83E8B009DF685 /* MapTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84420E83E8B009DF685 /* MapTabBarController.swift */; };
 		064BA84720E84FAA009DF685 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84620E84FAA009DF685 /* MapTableViewCell.swift */; };
 		06605C8B20E0464300F75C74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06605C8A20E0464300F75C74 /* AppDelegate.swift */; };
@@ -57,7 +57,10 @@
 		06605D0420E1158000F75C74 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06605D0320E1158000F75C74 /* MapViewController.swift */; };
 		06A339DD20E978C8002A7438 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339DC20E978C8002A7438 /* AddLocationViewController.swift */; };
 		06A339DF20E99380002A7438 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339DE20E99380002A7438 /* GCDBlackBox.swift */; };
-		06A339E120EA4CF6002A7438 /* MAPConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E020EA4CF6002A7438 /* MAPConvenience.swift */; };
+		06A339E120EA4CF6002A7438 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E020EA4CF6002A7438 /* UdacityConvenience.swift */; };
+		06A339E420EC50EE002A7438 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E320EC50EE002A7438 /* ParseConstants.swift */; };
+		06A339E620EC5100002A7438 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E520EC5100002A7438 /* ParseClient.swift */; };
+		06A339E820EC5112002A7438 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E720EC5112002A7438 /* ParseConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,8 +83,8 @@
 /* Begin PBXFileReference section */
 		064BA83C20E2638E009DF685 /* MapTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewController.swift; sourceTree = "<group>"; };
 		064BA83E20E26465009DF685 /* OnTheMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMap.swift; sourceTree = "<group>"; };
-		064BA84020E26C23009DF685 /* MapConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConstants.swift; sourceTree = "<group>"; };
-		064BA84220E2F791009DF685 /* MAPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAPClient.swift; sourceTree = "<group>"; };
+		064BA84020E26C23009DF685 /* UdacityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		064BA84220E2F791009DF685 /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		064BA84420E83E8B009DF685 /* MapTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabBarController.swift; sourceTree = "<group>"; };
 		064BA84620E84FAA009DF685 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
 		06605C8720E0464300F75C74 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +137,10 @@
 		06605D0320E1158000F75C74 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		06A339DC20E978C8002A7438 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		06A339DE20E99380002A7438 /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
-		06A339E020EA4CF6002A7438 /* MAPConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAPConvenience.swift; sourceTree = "<group>"; };
+		06A339E020EA4CF6002A7438 /* UdacityConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		06A339E320EC50EE002A7438 /* ParseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		06A339E520EC5100002A7438 /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		06A339E720EC5112002A7438 /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,7 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				064BA83E20E26465009DF685 /* OnTheMap.swift */,
-				06605CC020E047D400F75C74 /* MAPClient */,
+				06A339E220EC4D5F002A7438 /* ParseClient */,
+				06605CC020E047D400F75C74 /* UdacityClient */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -295,14 +302,24 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		06605CC020E047D400F75C74 /* MAPClient */ = {
+		06605CC020E047D400F75C74 /* UdacityClient */ = {
 			isa = PBXGroup;
 			children = (
-				064BA84020E26C23009DF685 /* MapConstants.swift */,
-				064BA84220E2F791009DF685 /* MAPClient.swift */,
-				06A339E020EA4CF6002A7438 /* MAPConvenience.swift */,
+				064BA84020E26C23009DF685 /* UdacityConstants.swift */,
+				064BA84220E2F791009DF685 /* UdacityClient.swift */,
+				06A339E020EA4CF6002A7438 /* UdacityConvenience.swift */,
 			);
-			path = MAPClient;
+			path = UdacityClient;
+			sourceTree = "<group>";
+		};
+		06A339E220EC4D5F002A7438 /* ParseClient */ = {
+			isa = PBXGroup;
+			children = (
+				06A339E320EC50EE002A7438 /* ParseConstants.swift */,
+				06A339E520EC5100002A7438 /* ParseClient.swift */,
+				06A339E720EC5112002A7438 /* ParseConvenience.swift */,
+			);
+			path = ParseClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,13 +390,16 @@
 				TargetAttributes = {
 					06605C8620E0464300F75C74 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					06605C9D20E0464600F75C74 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 06605C8620E0464300F75C74;
 					};
 					06605CA820E0464600F75C74 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 06605C8620E0464300F75C74;
 					};
 				};
@@ -475,13 +495,16 @@
 				06605C8B20E0464300F75C74 /* AppDelegate.swift in Sources */,
 				06A339DF20E99380002A7438 /* GCDBlackBox.swift in Sources */,
 				064BA83F20E26465009DF685 /* OnTheMap.swift in Sources */,
+				06A339E620EC5100002A7438 /* ParseClient.swift in Sources */,
 				06A339DD20E978C8002A7438 /* AddLocationViewController.swift in Sources */,
 				064BA83D20E2638E009DF685 /* MapTableViewController.swift in Sources */,
+				06A339E820EC5112002A7438 /* ParseConvenience.swift in Sources */,
 				064BA84720E84FAA009DF685 /* MapTableViewCell.swift in Sources */,
 				06605D0420E1158000F75C74 /* MapViewController.swift in Sources */,
-				064BA84120E26C23009DF685 /* MapConstants.swift in Sources */,
-				064BA84320E2F791009DF685 /* MAPClient.swift in Sources */,
-				06A339E120EA4CF6002A7438 /* MAPConvenience.swift in Sources */,
+				064BA84120E26C23009DF685 /* UdacityConstants.swift in Sources */,
+				064BA84320E2F791009DF685 /* UdacityClient.swift in Sources */,
+				06A339E120EA4CF6002A7438 /* UdacityConvenience.swift in Sources */,
+				06A339E420EC50EE002A7438 /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +686,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -681,7 +704,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -701,7 +724,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMapTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnTheMap.app/OnTheMap";
 			};
@@ -722,7 +745,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMapTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnTheMap.app/OnTheMap";
 			};
@@ -742,7 +765,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = OnTheMap;
 			};
@@ -762,7 +785,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mulvihill.dave.OnTheMapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = OnTheMap;
 			};

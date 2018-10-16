@@ -11,11 +11,8 @@ import MapKit
 
 class MapTableViewController:  UITableViewController {
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> MapTableViewCell {
@@ -23,10 +20,10 @@ class MapTableViewController:  UITableViewController {
         let CellReuseId = "userCell"
         let user =  MapPins[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseId) as! MapTableViewCell?
-        
-        let lastname = user[MAPClient.JSONResponseKeys.StudentLastName] as! String
-        let firstname = user[MAPClient.JSONResponseKeys.StudentFirstName] as! String
-        let userURL = user[MAPClient.JSONResponseKeys.StudentMediaURL] as! String
+       
+        let firstname = user[ParseClient.JSONResponseKeys.StudentFirstName] as! String
+        let lastname = user[ParseClient.JSONResponseKeys.StudentLastName] as! String
+        let userURL = user[ParseClient.JSONResponseKeys.StudentMediaURL] as! String
         
         cell?.imageView?.image = UIImage(contentsOfFile: "icon_pin.png")
         cell?.name?.text = "\(firstname) \(lastname)"
@@ -43,9 +40,15 @@ class MapTableViewController:  UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-        if let userURL = MapPins[(indexPath as NSIndexPath).row][MAPClient.JSONResponseKeys.StudentMediaURL] {
-        //     app.openURL(URL(string: toOpen)!)
-            app.open(URL(string:userURL as! String)!,options: [ : ], completionHandler: nil)
+        if let userURL = MapPins[(indexPath as NSIndexPath).row][ParseClient.JSONResponseKeys.StudentMediaURL] {
+            app.open(URL(string:userURL as! String)!,options: [ : ]) { (success) in
+                if (!success) {
+                    let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
         }
         
     }
