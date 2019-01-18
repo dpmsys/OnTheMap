@@ -50,6 +50,5 @@ class MapTableViewController:  UITableViewController {
                 }
             }
         }
-        
     }
 }

@@ -10,8 +10,8 @@ extension UdacityClient {
 
     struct Constants {
         static let APIScheme = "https"
-        static let APIHost = "www.udacity.com"
-        static let APIPath = "/api"
+        static let APIHost = "onthemap-api.udacity.com"
+        static let APIPath = "/v1"
     }
 
     struct Methods {

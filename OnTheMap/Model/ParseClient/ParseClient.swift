@@ -49,12 +49,11 @@ class ParseClient : NSObject {
     
     func taskForPOSTMethod(_ method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        var parametersWithAPIKey = parameters
-        parametersWithAPIKey[ParameterKeys.APIKey] = Constants.APIKey as AnyObject
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         

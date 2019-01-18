@@ -64,7 +64,8 @@ class UdacityClient : NSObject {
             }
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print("error request returned status other than 2xx!")
+           
+                print("error request returned status other than 2xx!",(response as? HTTPURLResponse)?.statusCode as Any)
                 return
             }
             
@@ -87,7 +88,7 @@ class UdacityClient : NSObject {
         var parsedResult: AnyObject! = nil
         let range = 5..<data.count
         let newData = data.subdata(in: range)
-        
+        print(String(data: newData, encoding: .utf8)!)
         do {
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         }catch{
@@ -109,6 +110,7 @@ class UdacityClient : NSObject {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
+        print(components.url)
         return components.url!
     }
 

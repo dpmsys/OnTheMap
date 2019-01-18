@@ -12,6 +12,7 @@ var sessionID: String? = nil
 var userID: String? = nil
 var MapPoints: MKPointAnnotation?
 
+
 struct UserInfo {
     var FirstName: String = ""
     var LastName: String = ""
@@ -32,6 +33,7 @@ struct MapPin {
 }
 
 var MapPins: [[String:Any]]!
+var userinfo: UserInfo?
 
 
 

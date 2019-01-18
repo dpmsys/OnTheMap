@@ -29,9 +29,13 @@ class LoginViewController: UIViewController {
                         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
                             if success {
                                 print("success load pin data")
-                                self.performSegue(withIdentifier: "navSegue", sender: self)
+                                performUIUpdatesOnMain () {
+                                    self.performSegue(withIdentifier: "navSegue", sender: self)
+                                }
                             }
                         }
+                    }else{
+                        print ("getpublicuserdata failed")
                     }
                 }
             }

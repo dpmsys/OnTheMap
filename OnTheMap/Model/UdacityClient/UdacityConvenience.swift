@@ -57,6 +57,7 @@ extension UdacityClient {
                 if let userDict = results?[UdacityClient.JSONResponseKeys.User] as? NSDictionary {
                     if let emailDict = userDict[UdacityClient.JSONResponseKeys.UserEmail] as? NSDictionary {
                         
+                        
                         let userinfo = UserInfo(FirstName: userDict[UdacityClient.JSONResponseKeys.UserFirstName] as! String,
                                                 LastName: userDict[UdacityClient.JSONResponseKeys.UserLastName] as! String,
                                                 emailAddress: emailDict[UdacityClient.JSONResponseKeys.UserEmailAddr] as! String)
@@ -67,7 +68,7 @@ extension UdacityClient {
                         completionHandlerForUserData(true, nil)
                     }
                 } else {
-                    print ("Could not find account ID in response")
+                    print ("Could not find account ID in response", results as Any)
                     completionHandlerForUserData(false, "Login fail (Post Session)")
                 }
             }
