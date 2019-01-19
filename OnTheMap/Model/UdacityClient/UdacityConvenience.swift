@@ -48,13 +48,16 @@ extension UdacityClient {
         var urlstr: String = UdacityClient.Methods.Users
         urlstr.append(userid)
         
+        //print(urlstr)
         let _ = taskForGETMethod(urlstr, parameters: parameters as [String:AnyObject]) { (results, error) in
             
             if let error = error {
                 print (error)
                 completionHandlerForUserData(false, "Get userdata fail (Post session)")
             } else {
-                if let userDict = results?[UdacityClient.JSONResponseKeys.User] as? NSDictionary {
+                //print(results)
+                //?[UdacityClient.JSONResponseKeys.User]
+                if let userDict = results as? NSDictionary {
                     if let emailDict = userDict[UdacityClient.JSONResponseKeys.UserEmail] as? NSDictionary {
                         
                         

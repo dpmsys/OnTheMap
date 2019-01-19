@@ -33,7 +33,7 @@ extension UdacityClient {
         static let Session = "session"
         static let SessionID = "id"
   
-        static let User = "user"
+        static let User = ""
         static let UserFirstName = "first_name"
         static let UserLastName = "last_name"
         static let UserEmail = "email"
