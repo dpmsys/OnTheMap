@@ -22,35 +22,31 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         
         for dictionary in MapPins {
 
+            print(" ")
             print(pinEntry,dictionary)
-            //if
-                let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String
-                let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String
-                let mediaURL = dictionary[ParseClient.JSONResponseKeys.StudentMediaURL] as? String
-                let latval = dictionary[ParseClient.JSONResponseKeys.StudentLatitude] as? Double
-                let longval = dictionary[ParseClient.JSONResponseKeys.StudentLongitude] as? Double
-            
-                
-            let lat = CLLocationDegrees(latval ?? 0)
-            let long = CLLocationDegrees(longval ?? 0)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
 
-         //   print(first,last, mediaURL)
+            let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
+            let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
+            let mediaURL = dictionary[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
+            let latval = dictionary[ParseClient.JSONResponseKeys.StudentLatitude] as? Double ?? 0
+            let longval = dictionary[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
+
+                
+            let lat = CLLocationDegrees(latval)
+            let long = CLLocationDegrees(longval)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
+
+            print(first,last,mediaURL,lat,long)
             
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-            annotation.title = "\(first ?? " ") \(last ?? " ")"
-                annotation.subtitle = mediaURL
-              
-                annotations.append(annotation)
-                self.mapView.addAnnotations(annotations)
- //           } else {
-  //              print("Invalid pin skipped\(pinEntry) \(MapPins[pinEntry])\n\n")
-                //MapPins.remove(at: pinEntry)
- //           }
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+          
+            annotations.append(annotation)
+            self.mapView.addAnnotations(annotations)
             pinEntry = pinEntry + 1
         }
-        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
