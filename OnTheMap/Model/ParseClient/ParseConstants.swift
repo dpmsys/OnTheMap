@@ -44,7 +44,7 @@ extension ParseClient {
         static let StudentLongitude = "longitude"
         static let StudentMapString = "mapString"
         static let StudentMediaURL = "mediaURL"
-        static let StudentObjectID = "objectId"
+        static let StudentObjectId = "objectId"
         static let StudentUniqueKey = "uniqueKey"
         static let StudentUpdated = "updatedAt"
     }

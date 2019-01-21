@@ -20,28 +20,30 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         
         var pinEntry:Int = 0
         
-        for dictionary in MapPins {
+        for student in Students {
 
             print(" ")
-            print(pinEntry,dictionary)
-
-            let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
-            let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
-            let mediaURL = dictionary[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
-            let latval = dictionary[ParseClient.JSONResponseKeys.StudentLatitude] as? Double ?? 0
-            let longval = dictionary[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
-
+            print(pinEntry,student.firstName,student.lastName)
+//
+//            let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
+//            let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
+//            let mediaURL = dictionary[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
+//            let latval = dictionary[ParseClient.JSONResponseKeys.StudentLatitude] as? Double ?? 0
+//            let longval = dictionary[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
                 
-            let lat = CLLocationDegrees(latval)
-            let long = CLLocationDegrees(longval)
+//            let lat = CLLocationDegrees(latval)
+//            let long = CLLocationDegrees(longval)
+            
+            let lat = CLLocationDegrees(student.latitude)
+            let long = CLLocationDegrees(student.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
 
-            print(first,last,mediaURL,lat,long)
+ //           print(first,last,mediaURL,lat,long)
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
+            annotation.title = "\(student.firstName) \(student.lastName)"
+            annotation.subtitle = student.mediaURL
           
             annotations.append(annotation)
             self.mapView.addAnnotations(annotations)

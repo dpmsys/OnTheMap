@@ -19,18 +19,33 @@ struct UserInfo {
     var emailAddress: String = ""
 }
 
-struct MapPin {
-    let createdAt: String
-    let firstName: String
-    let lastName: String
-    let latitude: Float
-    let longitude: Float
-    let mapString: String
-    let mediaURL: URL
-    let objectId: String
-    let uniqueKey: String
-    let updatedAt: Date
+struct StudentInformation {
+    var createdAt: String
+    var firstName: String
+    var lastName: String
+    var latitude: Double
+    var longitude: Double
+    var mapString: String
+    var mediaURL: String
+    var objectId: String
+    var uniqueKey: String
+    var updatedAt: Date
+    
+    init (userdict: Dictionary <String,Any?>) {
+        self.createdAt = userdict[ParseClient.JSONResponseKeys.StudentCreated] as? String ?? ""
+        self.firstName = userdict[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
+        self.lastName = userdict[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
+        self.latitude = userdict[ParseClient.JSONResponseKeys.StudentLatitude]  as? Double ?? 0
+        self.longitude = userdict[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
+        self.mapString = userdict[ParseClient.JSONResponseKeys.StudentMapString] as? String ?? ""
+        self.mediaURL = userdict[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
+        self.objectId = userdict[ParseClient.JSONResponseKeys.StudentObjectId] as? String ?? ""
+        self.uniqueKey = userdict[ParseClient.JSONResponseKeys.StudentUniqueKey] as? String ?? ""
+        self.updatedAt = userdict[ParseClient.JSONResponseKeys.StudentUpdated] as? Date ?? Date(timeIntervalSinceNow: 0)
+    }
 }
+
+var Students = [StudentInformation] ()
 
 var MapPins: [[String:Any]]!
 var userinfo: UserInfo?

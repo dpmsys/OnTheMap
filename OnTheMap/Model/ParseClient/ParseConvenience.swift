@@ -23,8 +23,13 @@ extension ParseClient {
                 print (error)
                 completionHandlerForPinData(false, "Get PinData fail (GET session)")
             } else {
-                if let  pins = results?[ParseClient.JSONResponseKeys.Results] as! [NSDictionary]? {
-                    MapPins = pins as? [[String:Any]]
+                if let  studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
+  //                  var cnt:Int = 0
+                    for student in studentsDict {
+                        Students.append(StudentInformation(userdict: student))
+  //                      print(Students[cnt].firstName, Students[cnt].lastName)
+  //                      cnt = cnt + 1
+                    }
                     completionHandlerForPinData(true, nil)
                 } else {
                     print ("Could not find student data in response")
@@ -33,6 +38,4 @@ extension ParseClient {
             }
         }
     }
-    
-    
 }

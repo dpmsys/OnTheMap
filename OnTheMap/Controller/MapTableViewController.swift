@@ -18,30 +18,27 @@ class MapTableViewController:  UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> MapTableViewCell {
         
         let CellReuseId = "userCell"
-        let user =  MapPins[(indexPath as NSIndexPath).row]
+        let student =  Students[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseId) as! MapTableViewCell?
-       
-        let firstname = user[ParseClient.JSONResponseKeys.StudentFirstName] as! String
-        let lastname = user[ParseClient.JSONResponseKeys.StudentLastName] as! String
-        let userURL = user[ParseClient.JSONResponseKeys.StudentMediaURL] as! String
         
         cell?.imageView?.image = UIImage(contentsOfFile: "icon_pin.png")
-        cell?.name?.text = "\(firstname) \(lastname)"
-        cell?.URL?.text = userURL
+        cell?.name?.text = "\(student.firstName) \(student.lastName)"
+        cell?.URL?.text = student.mediaURL
     
         return cell!
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return MapPins.count
+        return Students.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-        if let userURL = MapPins[(indexPath as NSIndexPath).row][ParseClient.JSONResponseKeys.StudentMediaURL] {
-            app.open(URL(string:userURL as! String)!,options: [ : ]) { (success) in
+//        if let userURL = Students[(indexPath as NSIndexPath).row].mediaURL.absoluteString {
+//        app.open(URL(string:userURL as! String)!,options: [ : ]) { (success) in
+        app.open(URL(string: Students[(indexPath as NSIndexPath).row].mediaURL)!,options: [ : ]) { (success) in
                 if (!success) {
                     let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
                     
@@ -49,6 +46,6 @@ class MapTableViewController:  UITableViewController {
                     self.present(alert, animated: true)
                 }
             }
-        }
+       // }
     }
 }
