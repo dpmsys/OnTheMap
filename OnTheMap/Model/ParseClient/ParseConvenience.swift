@@ -23,17 +23,15 @@ extension ParseClient {
                 print (error)
                 completionHandlerForPinData(false, "Get PinData fail (GET session)")
             } else {
-                print(userinfo?.FirstName)
-                print(userinfo?.LastName)
-                print(userinfo?.emailAddress)
+//                print(userinfo?.FirstName)
+ //               print(userinfo?.LastName)
+ //               print(userinfo?.emailAddress)
 
                 if let studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
-  //                  var cnt:Int = 0
+print("reloading students array")
                     Students.removeAll()
                     for student in studentsDict {
                         Students.append(StudentInformation(userdict: student))
-  //                      print(Students[cnt].firstName, Students[cnt].lastName)
-  //                      cnt = cnt + 1
                     }
                     completionHandlerForPinData(true, nil)
                 } else {
@@ -51,21 +49,15 @@ extension ParseClient {
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMapString)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMapString] ?? "" as AnyObject)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMediaURL)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMediaURL] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLatitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLatitude] ?? "" as AnyObject), "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLongitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLongitude] ?? "" as AnyObject)}"
         
-  //      jsonBody = ""
         print(jsonBody)
-    //    (ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentUniqueKey])\"
-    //    \"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\":\"\(studentInfo[ParseClient.JSONResponseKeys.StudentUniqueKey])\"
-    //    \"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\":\"\(studentInfo[ParseClient.JSONResponseKeys.StudentUniqueKey])\"
-    //    \"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\":\"\(studentInfo[ParseClient.JSONResponseKeys.StudentUniqueKey])\"}"
         
         let _ = taskForPOSTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
-                print (error)
-            //completionHandlerForPinData(false, "Get PinData fail (GET session)")
-                
+                print (error)                
             } else {
                 print(results)
             }

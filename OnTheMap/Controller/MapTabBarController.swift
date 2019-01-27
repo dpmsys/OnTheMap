@@ -17,6 +17,7 @@ class MapTabBarController:     UITabBarController {
         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
             if success {
                 print("success refresh")
+                studentDataModified = true
  //               performUIUpdatesOnMain () {
   //                  self.performSegue(withIdentifier: "navSegue", sender: self)
  //               }

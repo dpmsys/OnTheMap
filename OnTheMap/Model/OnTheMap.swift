@@ -11,6 +11,7 @@ import MapKit
 var sessionID: String? = nil
 var userID: String? = nil
 var MapPoints: MKPointAnnotation?
+var studentDataModified: Bool = false
 
 
 struct UserInfo {
@@ -29,7 +30,7 @@ struct StudentInformation {
     var mediaURL: String
     var objectId: String
     var uniqueKey: String
-    var updatedAt: Date
+    var updatedAt: String
     
     init (userdict: Dictionary <String,Any?>) {
         self.createdAt = userdict[ParseClient.JSONResponseKeys.StudentCreated] as? String ?? ""
@@ -41,7 +42,7 @@ struct StudentInformation {
         self.mediaURL = userdict[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
         self.objectId = userdict[ParseClient.JSONResponseKeys.StudentObjectId] as? String ?? ""
         self.uniqueKey = userdict[ParseClient.JSONResponseKeys.StudentUniqueKey] as? String ?? ""
-        self.updatedAt = userdict[ParseClient.JSONResponseKeys.StudentUpdated] as? Date ?? Date(timeIntervalSinceNow: 0)
+        self.updatedAt = userdict[ParseClient.JSONResponseKeys.StudentUpdated] as? String ?? ""
     }
 }
 

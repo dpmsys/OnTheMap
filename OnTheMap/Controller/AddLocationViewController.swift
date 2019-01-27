@@ -43,11 +43,13 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         var parameters = [String : AnyObject] ()
         var annotation: MKAnnotation?
         
-        parameters["uniqueKey"] = "1234" as AnyObject
-        parameters["firstName"] = userinfo?.FirstName as AnyObject
+ //       parameters["uniqueKey"] = "1234" as AnyObject
+ //       parameters["firstName"] = userinfo?.FirstName as AnyObject
+        parameters["firstName"] = "(Dave)" as AnyObject
         parameters["lastName"] = userinfo?.LastName as AnyObject
         parameters["mapString"] = location.text as AnyObject
-        parameters["mediaURL"] = linkURL.text as AnyObject
+//        parameters["mediaURL"] = linkURL.text as AnyObject
+        parameters["mediaURL"] = "http://cnn.com" as AnyObject
         annotation = addMap.annotations[0]
         parameters["latitude"] = annotation?.coordinate.latitude as AnyObject
         parameters["longitude"] = annotation?.coordinate.longitude as AnyObject
@@ -55,8 +57,21 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         print (parameters)
         
         ParseClient.sharedInstance().postStudent(studentInfo: parameters)
-        
-        
+        ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+            if success {
+                //                              print("success load pin data")
+                performUIUpdatesOnMain () {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }else{
+                performUIUpdatesOnMain () {
+                    let alert = UIAlertController(title: nil, message: "Failed download of student locations", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
     }
     
     
