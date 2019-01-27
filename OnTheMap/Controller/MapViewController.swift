@@ -23,7 +23,7 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         for student in Students {
 
             print(" ")
-            print(pinEntry,student.firstName,student.lastName)
+            print(pinEntry,student.firstName,student.lastName, student.latitude, student.longitude, student.mediaURL,student.objectId)
 //
 //            let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
 //            let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
@@ -50,6 +50,7 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
             pinEntry = pinEntry + 1
         }
     }
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         

@@ -12,15 +12,29 @@ import CoreLocation
 import MapKit
 
 
-class AddLocationViewController: UIViewController {
+class AddLocationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var location: UITextField!
     @IBOutlet weak var linkURL: UITextField!
     @IBOutlet weak var addMap: MKMapView!
     
+    @IBAction func resignKeyboard(sender: AnyObject) {
+        sender.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem?.title = "Cancel"
+        
+        self.location.delegate = self
+        self.linkURL.delegate = self
+        
+    }
+    
+    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+        userText.resignFirstResponder()
+        self.view.endEditing(true)
+        return true;
     }
     
     @IBAction func finish(_ sender: Any) {
@@ -39,7 +53,10 @@ class AddLocationViewController: UIViewController {
         parameters["longitude"] = annotation?.coordinate.longitude as AnyObject
         
         print (parameters)
-//      ParseClient.sharedInstance().taskForPOSTMethod(ParseClient.Methods.StudentLocation, parameters: parameters, jsonBody: <#T##String#>, completionHandlerForPOST: <#T##(AnyObject?, NSError?) -> Void#>)
+        
+        ParseClient.sharedInstance().postStudent(studentInfo: parameters)
+        
+        
     }
     
     
