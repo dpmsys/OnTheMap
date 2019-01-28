@@ -28,7 +28,7 @@ extension ParseClient {
  //               print(userinfo?.emailAddress)
 
                 if let studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
-print("reloading students array")
+print("loading students array")
                     Students.removeAll()
                     for student in studentsDict {
                         Students.append(StudentInformation(userdict: student))

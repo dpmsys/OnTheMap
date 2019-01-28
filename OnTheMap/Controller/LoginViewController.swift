@@ -26,30 +26,36 @@ class LoginViewController: UIViewController {
                 userID = user!
                 UdacityClient.sharedInstance().getPublicUserData(user!) { (success, errorString) in
                     if success {
-//                      print ("success")
                         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
                             if success {
-//                              print("success load pin data")
                                 performUIUpdatesOnMain () {
                                     self.performSegue(withIdentifier: "navSegue", sender: self)
                                 }
                             }else{
-                                performUIUpdatesOnMain () {
-                                    let alert = UIAlertController(title: nil, message: "Failed download of student locations", preferredStyle: .alert)
-                                    
-                                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                                    self.present(alert, animated: true)
-                                }
+                                self.errorAlert(message: "Failed download of student locations")
                             }
                         }
                     }else{
-                        print ("getpublicuserdata failed")
+                        self.errorAlert(message: "getpublicuserdata failed")
                     }
                 }
+            } else {
+                self.errorAlert(message: errorString!)
             }
         }
     }
     
+    func errorAlert(message: String) {
+        
+        performUIUpdatesOnMain () {
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }
+        
+        
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -13,14 +13,14 @@ extension UdacityClient {
     func getAccountSessionID (username: String, password: String, _ completionHandlerForSession: @escaping (_ success: Bool, _ accountID: String?, _ errorString: String?) -> Void) {
         
         let parameters = [String:AnyObject] ()
-        let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"K1ssB4uG0\"}}"
-    //    let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
+   //     let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"K1ssB4uG0\"}}"
+        let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
         
         let _ = taskForPOSTMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
             
             if let error = error {
                 print (error)
-                completionHandlerForSession(false, nil, "Login fail (Post session)")
+                completionHandlerForSession(false, nil, "Login failed network")
             } else {
                 
                 if let account = results?[JSONResponseKeys.Account] as? NSDictionary,

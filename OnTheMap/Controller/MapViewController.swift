@@ -14,8 +14,9 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
-//        super.viewDidLoad()
-        refreshPins()
+        super.viewDidLoad()
+        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "pin")
+ //       refreshPins()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,9 +25,10 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
+        var pinView: MKPinAnnotationView!
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId, for: annotation) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -35,7 +37,9 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
         }else{
+            pinView!.canShowCallout = true
             pinView!.annotation = annotation
+            pinView!.pinTintColor = .red
         }
         
         return pinView
@@ -52,30 +56,15 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     
     func refreshPins() {
         
-        var annotations = [MKPointAnnotation] ()
-        
-        var pinEntry:Int = 0
         print("refreshing PINs")
+        self.mapView.removeAnnotations(annotations)
+        annotations.removeAll()
         
         for student in Students {
-            
-            
-  //          print(pinEntry,student.firstName,student.lastName, student.latitude, student.longitude, student.mediaURL,student.objectId)
-            //
-            //            let first = dictionary[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
-            //            let last = dictionary[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
-            //            let mediaURL = dictionary[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
-            //            let latval = dictionary[ParseClient.JSONResponseKeys.StudentLatitude] as? Double ?? 0
-            //            let longval = dictionary[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
-            
-            //            let lat = CLLocationDegrees(latval)
-            //            let long = CLLocationDegrees(longval)
             
             let lat = CLLocationDegrees(student.latitude)
             let long = CLLocationDegrees(student.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
-            
-            //           print(first,last,mediaURL,lat,long)
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
@@ -83,10 +72,9 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
             annotation.subtitle = student.mediaURL
             
             annotations.append(annotation)
-            self.mapView.addAnnotations(annotations)
-            pinEntry = pinEntry + 1
-        }
 
+        }
+        self.mapView.addAnnotations(annotations)
     }
 }
 

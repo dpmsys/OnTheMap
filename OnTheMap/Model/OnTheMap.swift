@@ -45,7 +45,7 @@ struct StudentInformation {
         self.updatedAt = userdict[ParseClient.JSONResponseKeys.StudentUpdated] as? String ?? ""
     }
 }
-
+var annotations = [MKPointAnnotation] ()
 var Students = [StudentInformation] ()
 
 var MapPins: [[String:Any]]!

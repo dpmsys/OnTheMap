@@ -59,12 +59,14 @@ class UdacityClient : NSObject {
     
         let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
             guard (error == nil) else {
-                print("error in request POST method")
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "POST Method", code: 1 , userInfo: nil))
+   //             completionHandlerForPOST("Failed POST method" as AnyObject, error)
+                 print("error in request POST method")
                 return
             }
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-           
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "POST Method", code: 1 , userInfo: nil))
                 print("error request returned status other than 2xx!",(response as? HTTPURLResponse)?.statusCode as Any)
                 return
             }
