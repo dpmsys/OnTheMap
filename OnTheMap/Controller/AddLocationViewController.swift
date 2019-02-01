@@ -55,11 +55,26 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         parameters["longitude"] = annotation?.coordinate.longitude as AnyObject
         
         print (parameters)
+        spinner!.show(vc: self)
+        ParseClient.sharedInstance().postStudent(studentInfo: parameters) {(success, errorstring) in
+            if success {
+                
+            }else{
+                performUIUpdatesOnMain () {
+                    let alert = UIAlertController(title: nil, message: errorstring, preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
         
-        ParseClient.sharedInstance().postStudent(studentInfo: parameters)
         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+            
+            spinner!.hide(vc: self)
             if success {
                 //                              print("success load pin data")
+                
                 performUIUpdatesOnMain () {
                     self.navigationController?.popViewController(animated: true)
                 }

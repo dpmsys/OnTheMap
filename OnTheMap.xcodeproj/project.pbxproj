@@ -61,6 +61,7 @@
 		06A339E420EC50EE002A7438 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E320EC50EE002A7438 /* ParseConstants.swift */; };
 		06A339E620EC5100002A7438 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E520EC5100002A7438 /* ParseClient.swift */; };
 		06A339E820EC5112002A7438 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A339E720EC5112002A7438 /* ParseConvenience.swift */; };
+		06AF31DA2204EBED0075C21D /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06AF31D92204EBED0075C21D /* SpinnerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,7 @@
 		06A339E320EC50EE002A7438 /* ParseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		06A339E520EC5100002A7438 /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		06A339E720EC5112002A7438 /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
+		06AF31D92204EBED0075C21D /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 		06605CBD20E0469200F75C74 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				06AF31D92204EBED0075C21D /* SpinnerViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				064BA84120E26C23009DF685 /* UdacityConstants.swift in Sources */,
 				064BA84320E2F791009DF685 /* UdacityClient.swift in Sources */,
 				06A339E120EA4CF6002A7438 /* UdacityConvenience.swift in Sources */,
+				06AF31DA2204EBED0075C21D /* SpinnerViewController.swift in Sources */,
 				06A339E420EC50EE002A7438 /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

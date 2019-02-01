@@ -12,6 +12,7 @@ var sessionID: String? = nil
 var userID: String? = nil
 var MapPoints: MKPointAnnotation?
 var studentDataModified: Bool = false
+var spinner: SpinnerViewController?
 
 
 struct UserInfo {

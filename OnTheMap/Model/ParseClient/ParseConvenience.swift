@@ -43,7 +43,7 @@ print("loading students array")
     }
     
     
-    func postStudent(studentInfo: [String:AnyObject]) {
+    func postStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
@@ -57,8 +57,10 @@ print("loading students array")
         
         let _ = taskForPOSTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
+                completionHandlerForPostStudent(false, error.localizedDescription)
                 print (error)                
             } else {
+                completionHandlerForPostStudent(true, nil)
                 print(results)
             }
         }

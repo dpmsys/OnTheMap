@@ -20,14 +20,20 @@ class LoginViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         
+        spinner?.show(vc: self)
         UdacityClient.sharedInstance().getAccountSessionID(username: email.text!, password: password.text!) { (success, user, errorString) in
             if success {
                print ("userkey = \(user!)")
                 userID = user!
                 UdacityClient.sharedInstance().getPublicUserData(user!) { (success, errorString) in
                     if success {
+  //                      self.activityIndicator(run: true)
                         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
                             if success {
+                                spinner?.hide(vc: self)
+                                                          spinner?.hide(vc: self)
+                                                          spinner?.hide(vc: self)
+                                
                                 performUIUpdatesOnMain () {
                                     self.performSegue(withIdentifier: "navSegue", sender: self)
                                 }
@@ -40,10 +46,30 @@ class LoginViewController: UIViewController {
                     }
                 }
             } else {
+                print ("error 2")
                 self.errorAlert(message: errorString!)
             }
         }
     }
+    
+    func activityIndicator(run: Bool) {
+        
+        performUIUpdatesOnMain () {
+            if (run) {
+                self.addChild(spinner!)
+                spinner!.view.frame = self.view.frame
+                self.view.addSubview(spinner!.view)
+                spinner!.didMove(toParent: self)
+                
+            }else{
+                
+                spinner!.willMove(toParent: nil)
+                spinner!.view.removeFromSuperview()
+                spinner!.removeFromParent()
+
+            }
+        }
+     }
     
     func errorAlert(message: String) {
         
@@ -53,12 +79,11 @@ class LoginViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
-        
-        
     }
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner = SpinnerViewController()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
