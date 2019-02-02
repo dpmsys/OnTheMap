@@ -19,13 +19,13 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addMap: MKMapView!
     
     @IBAction func resignKeyboard(sender: AnyObject) {
-        sender.resignFirstResponder()
+        let _ = sender.resignFirstResponder()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem?.title = "Cancel"
-        
+        print ("addlocation loaded")
         self.location.delegate = self
         self.linkURL.delegate = self
         
@@ -43,12 +43,19 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         var parameters = [String : AnyObject] ()
         var annotation: MKAnnotation?
         
- //       parameters["uniqueKey"] = "1234" as AnyObject
- //       parameters["firstName"] = userinfo?.FirstName as AnyObject
-        parameters["firstName"] = "(Dave)" as AnyObject
+        if location.text == "" {
+            location.text = "New York, NY"
+        }
+        if linkURL.text == "" {
+            linkURL.text = "http://cnn.com"
+        }
+        
+        parameters["uniqueKey"] = sessionID as AnyObject
+        parameters["firstName"] = userinfo?.FirstName as AnyObject
+//        parameters["firstName"] = "(Dave)" as AnyObject
         parameters["lastName"] = userinfo?.LastName as AnyObject
         parameters["mapString"] = location.text as AnyObject
-//        parameters["mediaURL"] = linkURL.text as AnyObject
+        parameters["mediaURL"] = linkURL.text as AnyObject
         parameters["mediaURL"] = "http://cnn.com" as AnyObject
         annotation = addMap.annotations[0]
         parameters["latitude"] = annotation?.coordinate.latitude as AnyObject
@@ -58,29 +65,26 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         spinner!.show(vc: self)
         ParseClient.sharedInstance().postStudent(studentInfo: parameters) {(success, errorstring) in
             if success {
-                
+                ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+                    
+                    spinner!.hide(vc: self)
+                    if success {
+                         performUIUpdatesOnMain () {
+                            //                (self.parent as! MapViewController).refreshPins()
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }else{
+                        performUIUpdatesOnMain () {
+                            let alert = UIAlertController(title: nil, message: "Failed download of student locations", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }
+                    }
+                }
             }else{
                 performUIUpdatesOnMain () {
                     let alert = UIAlertController(title: nil, message: errorstring, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-        
-        ParseClient.sharedInstance().loadPinData() { (success, errorString) in
-            
-            spinner!.hide(vc: self)
-            if success {
-                //                              print("success load pin data")
-                
-                performUIUpdatesOnMain () {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }else{
-                performUIUpdatesOnMain () {
-                    let alert = UIAlertController(title: nil, message: "Failed download of student locations", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                     self.present(alert, animated: true)
@@ -93,10 +97,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     @IBAction func findLocation(_ sender: Any) {
         
         let geocoder = CLGeocoder()
-        print ("geocoding New York, NY", location.text as Any)
-        if location.text == "" {
-            location.text = "New York, NY"
-        }
         
         geocoder.geocodeAddressString(location.text ?? "New York, NY", completionHandler: {(placeMarks, error)->Void in
             
@@ -117,7 +117,8 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
 
                     newMark.title = self.linkURL.text
                     newMark.coordinate = coordinate
-                    
+                    newMark.subtitle = self.linkURL.text
+ 
                     self.addMap.addAnnotation(newMark)
                     self.addMap.isHidden = false
                 }

@@ -16,10 +16,15 @@ class MapTableViewController:  UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
+        print("maptable viewwillappear")
         if studentDataModified {
             studentDataModified = false
             self.tableView.reloadData()
+            self.scrollToFirstRow()
+            
+//            self.tableView.setContentOffset(.zero, animated: true)
         }
     }
     
@@ -66,4 +71,10 @@ class MapTableViewController:  UITableViewController {
             print("Media URL is nil")
         }
     }
+    
+    func scrollToFirstRow() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+
 }

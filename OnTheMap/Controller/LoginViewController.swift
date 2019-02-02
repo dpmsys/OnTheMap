@@ -31,10 +31,7 @@ class LoginViewController: UIViewController {
                         ParseClient.sharedInstance().loadPinData() { (success, errorString) in
                             if success {
                                 spinner?.hide(vc: self)
-                                                          spinner?.hide(vc: self)
-                                                          spinner?.hide(vc: self)
-                                
-                                performUIUpdatesOnMain () {
+                                 performUIUpdatesOnMain () {
                                     self.performSegue(withIdentifier: "navSegue", sender: self)
                                 }
                             }else{
@@ -52,24 +49,24 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func activityIndicator(run: Bool) {
+//    func activityIndicator(run: Bool) {
         
-        performUIUpdatesOnMain () {
-            if (run) {
-                self.addChild(spinner!)
-                spinner!.view.frame = self.view.frame
-                self.view.addSubview(spinner!.view)
-                spinner!.didMove(toParent: self)
+ //       performUIUpdatesOnMain () {
+ //           if (run) {
+//                self.addChild(spinner!)
+ //               spinner!.view.frame = self.view.frame
+//                self.view.addSubview(spinner!.view)
+ //               spinner!.didMove(toParent: self)
                 
-            }else{
+//            }else{
                 
-                spinner!.willMove(toParent: nil)
-                spinner!.view.removeFromSuperview()
-                spinner!.removeFromParent()
+ //               spinner!.willMove(toParent: nil)
+//                spinner!.view.removeFromSuperview()
+//                spinner!.removeFromParent()
 
-            }
-        }
-     }
+ //           }
+ //       }
+ //    }
     
     func errorAlert(message: String) {
         

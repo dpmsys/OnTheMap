@@ -28,7 +28,7 @@ extension ParseClient {
  //               print(userinfo?.emailAddress)
 
                 if let studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
-print("loading students array")
+                    print("loading students array")
                     Students.removeAll()
                     for student in studentsDict {
                         Students.append(StudentInformation(userdict: student))
@@ -45,6 +45,7 @@ print("loading students array")
     
     func postStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
+        print ("posting student")
         var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
@@ -60,10 +61,12 @@ print("loading students array")
                 completionHandlerForPostStudent(false, error.localizedDescription)
                 print (error)                
             } else {
-                completionHandlerForPostStudent(true, nil)
+                print("results")
                 print(results)
+                print("results")
+                completionHandlerForPostStudent(true, nil)
+           
             }
         }
-        
     }
 }

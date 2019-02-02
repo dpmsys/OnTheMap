@@ -20,6 +20,7 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print ("mapview viewWillAppear refreshing pins")
         refreshPins()
     }
     
@@ -48,7 +49,9 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
+            print ("about to open pin URL")
             if let toOpen = view.annotation?.subtitle! {
+                print ("opening pin URL")
                 app.open(URL(string:toOpen)!,options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: nil)
             }
         }
@@ -56,25 +59,29 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     
     func refreshPins() {
         
-        print("refreshing PINs")
-        self.mapView.removeAnnotations(annotations)
-        annotations.removeAll()
-        
-        for student in Students {
+//        performUIUpdatesOnMain () {
+                    
+            print("refreshing PINs")
+            self.mapView.removeAnnotations(annotations)
+            annotations.removeAll()
             
-            let lat = CLLocationDegrees(student.latitude)
-            let long = CLLocationDegrees(student.longitude)
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(student.firstName) \(student.lastName)"
-            annotation.subtitle = student.mediaURL
-            
-            annotations.append(annotation)
+            for student in Students {
+                
+                let lat = CLLocationDegrees(student.latitude)
+                let long = CLLocationDegrees(student.longitude)
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = "\(student.firstName) \(student.lastName)"
+                annotation.subtitle = student.mediaURL
+                
+                annotations.append(annotation)
 
-        }
-        self.mapView.addAnnotations(annotations)
+            }
+            self.mapView.addAnnotations(annotations)
+            self.mapView.setNeedsDisplay()
+//        }
     }
 }
 
