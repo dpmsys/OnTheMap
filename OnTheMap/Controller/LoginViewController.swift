@@ -13,6 +13,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        spinner = SpinnerViewController()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
     @IBAction func signup(_ sender: Any) {
         UIApplication.shared.open(URL(string : "https://auth.udacity.com/sign-up")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (status) in
         })
@@ -27,17 +33,21 @@ class LoginViewController: UIViewController {
                 userID = user!
                 UdacityClient.sharedInstance().getPublicUserData(user!) { (success, errorString) in
                     if success {
-  //                      self.activityIndicator(run: true)
-                        ParseClient.sharedInstance().loadPinData() { (success, errorString) in
-                            if success {
-                                spinner?.hide(vc: self)
-                                 performUIUpdatesOnMain () {
-                                    self.performSegue(withIdentifier: "navSegue", sender: self)
-                                }
-                            }else{
-                                self.errorAlert(message: "Failed download of student locations")
-                            }
+                        spinner?.hide(vc: self)
+                        if success {
+  //                          ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+  //                              if success {
+                                    performUIUpdatesOnMain () {
+                                        self.performSegue(withIdentifier: "navSegue", sender: self)
+                                    }
+  //                              }else{
+  //                                  self.errorAlert(message: "Failed download of student locations")
+   //                             }
+  //                          }
+                        }else{
+                            self.errorAlert(message: "getpublicuserdata failed")
                         }
+
                     }else{
                         self.errorAlert(message: "getpublicuserdata failed")
                     }
@@ -78,11 +88,7 @@ class LoginViewController: UIViewController {
         }
     }
         
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        spinner = SpinnerViewController()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

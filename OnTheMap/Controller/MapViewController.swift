@@ -15,11 +15,28 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner?.show(vc: self)
+        ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+            performUIUpdatesOnMain () {
+                if success {
+
+                }else{
+    //              errorAlert(message: "Failed download of student locations")
+                }
+                self.refreshPins()
+                spinner?.hide(vc: self)
+            }
+        }
+
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "pin")
+
  //       refreshPins()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
         print ("mapview viewWillAppear refreshing pins")
         refreshPins()
     }
@@ -80,7 +97,7 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
 
             }
             self.mapView.addAnnotations(annotations)
-            self.mapView.setNeedsDisplay()
+//            self.mapView.setNeedsDisplay()
 //        }
     }
 }

@@ -49,11 +49,9 @@ class MapTableViewController:  UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-//        if let userURL = Students[(indexPath as NSIndexPath).row].mediaURL.absoluteString {
-//        app.open(URL(string:userURL as! String)!,options: [ : ]) { (success) in
+
         if let mediaURL = URL(string: Students[(indexPath as NSIndexPath).row].mediaURL) {
             app.open(mediaURL, options: [ : ]) { (success) in
-            //app.open(URL(string: Students[(indexPath as NSIndexPath).row].mediaURL)!,options: [ : ]) { (success) in
                 if (!success) {
                     let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
                     
@@ -62,7 +60,7 @@ class MapTableViewController:  UITableViewController {
                 }
             }
         } else {
-            // TODO nil media URL
+
             let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))

@@ -11,6 +11,12 @@ import UIKit
 
 class MapTabBarController:     UITabBarController {
     
+    @IBAction func logout(_ sender: Any) {
+        UdacityClient.sharedInstance().logout()
+        self.dismiss(animated: true)
+    }
+    
+    
     @IBAction func refresh(_ sender: Any) {
     
     print("in refresh data")

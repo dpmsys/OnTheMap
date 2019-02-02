@@ -175,6 +175,11 @@
             <objects>
                 <tabBarController id="qSO-Kv-G1y" customClass="MapTabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="G1x-Cy-ei8">
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="X8j-kJ-EBH">
+                            <connections>
+                                <action selector="logout:" destination="qSO-Kv-G1y" id="aFd-hX-KrD"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="O8A-Hb-bp7">
                                 <connections>
@@ -254,13 +259,19 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES" textContentType="location"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="location"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nXH-z0-o9y" id="GI6-Tc-kQS"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="link URL" textAlignment="natural" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="5Pv-gt-XNa">
                                 <rect key="frame" x="51" y="279" width="273" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="url"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" textContentType="url"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nXH-z0-o9y" id="xiu-Ru-hsd"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJM-Rm-tSZ">
                                 <rect key="frame" x="51" y="332" width="273" height="29"/>

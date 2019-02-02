@@ -35,8 +35,8 @@ struct StudentInformation {
     
     init (userdict: Dictionary <String,Any?>) {
         self.createdAt = userdict[ParseClient.JSONResponseKeys.StudentCreated] as? String ?? ""
-        self.firstName = userdict[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? ""
-        self.lastName = userdict[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? ""
+        self.firstName = userdict[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? "[No Firstname]"
+        self.lastName = userdict[ParseClient.JSONResponseKeys.StudentLastName] as? String ?? "[No Lastname]"
         self.latitude = userdict[ParseClient.JSONResponseKeys.StudentLatitude]  as? Double ?? 0
         self.longitude = userdict[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
         self.mapString = userdict[ParseClient.JSONResponseKeys.StudentMapString] as? String ?? ""

@@ -94,6 +94,48 @@ class UdacityClient : NSObject {
         return task
     }
     
+    func taskForDELETEMethod(_ method: String, parameters: [String: AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    
+        var xsrfCookie: HTTPCookie? = nil
+
+ //       var request = URLRequest(url: URL(string: method)!)
+        let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
+        
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" {
+                xsrfCookie = cookie
+            }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            print("session")
+            print(xsrfCookie)
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
+            if error != nil {
+                // handle error
+                print ("session delete error")
+                print (error.debugDescription)
+                return
+            }
+            
+            guard let data = data else {
+                print("error: no data returned by POST")
+                return
+            }
+            print(data)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        
+        task.resume()
+        
+        return task
+    }
+    
     
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         

@@ -18,10 +18,6 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var linkURL: UITextField!
     @IBOutlet weak var addMap: MKMapView!
     
-    @IBAction func resignKeyboard(sender: AnyObject) {
-        let _ = sender.resignFirstResponder()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem?.title = "Cancel"
@@ -31,11 +27,14 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+    func textFieldShouldReturn(_ userText: UITextField) -> Bool {
+        print("textfield should return")
+        location.resignFirstResponder()
+        linkURL.resignFirstResponder()
         userText.resignFirstResponder()
-        self.view.endEditing(true)
         return true;
     }
+
     
     @IBAction func finish(_ sender: Any) {
         
@@ -51,7 +50,8 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
         }
         
         parameters["uniqueKey"] = sessionID as AnyObject
-        parameters["firstName"] = userinfo?.FirstName as AnyObject
+        let firstname = (userinfo?.FirstName)! + "(Dave)"
+        parameters["firstName"] = firstname as AnyObject
 //        parameters["firstName"] = "(Dave)" as AnyObject
         parameters["lastName"] = userinfo?.LastName as AnyObject
         parameters["mapString"] = location.text as AnyObject
@@ -121,6 +121,9 @@ class AddLocationViewController: UIViewController, UITextFieldDelegate {
  
                     self.addMap.addAnnotation(newMark)
                     self.addMap.isHidden = false
+                    
+                    self.location.resignFirstResponder( )
+                    self.linkURL.resignFirstResponder()
                 }
             }
         })

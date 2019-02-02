@@ -77,4 +77,16 @@ extension UdacityClient {
             }
         }
     }
+    
+    func logout () {
+        
+        let parameters = [String:AnyObject] ()
+        let _ = taskForDELETEMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject]) { (results, error) in
+            if error != nil {
+                print("logout failed")
+            }else{
+                print("logout successful")
+            }
+        }
+    }
 }
