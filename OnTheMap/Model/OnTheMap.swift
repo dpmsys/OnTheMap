@@ -33,6 +33,20 @@ struct StudentInformation {
     var uniqueKey: String
     var updatedAt: String
     
+    init () {
+        self.createdAt = ""
+        self.firstName = "[No Firstname]"
+        self.lastName = "[No Lastname]"
+        self.latitude = 0.0
+        self.longitude = 0.0
+        self.mapString = ""
+        self.mediaURL = ""
+        self.objectId = ""
+        self.uniqueKey = ""
+        self.updatedAt = ""
+
+    }
+    
     init (userdict: Dictionary <String,Any?>) {
         self.createdAt = userdict[ParseClient.JSONResponseKeys.StudentCreated] as? String ?? ""
         self.firstName = userdict[ParseClient.JSONResponseKeys.StudentFirstName] as? String ?? "[No Firstname]"
@@ -47,10 +61,11 @@ struct StudentInformation {
     }
 }
 var annotations = [MKPointAnnotation] ()
+var studentLocation = StudentInformation()
 var Students = [StudentInformation] ()
 
 var MapPins: [[String:Any]]!
-var userinfo: UserInfo?
+var userInfo: UserInfo?
 
 
 

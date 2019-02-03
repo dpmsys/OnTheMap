@@ -16,21 +16,20 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         spinner?.show(vc: self)
-        ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
             performUIUpdatesOnMain () {
                 if success {
-
+                    self.refreshPins()
                 }else{
-    //              errorAlert(message: "Failed download of student locations")
+                    self.errorAlert(message: "Failed download of student locations")
                 }
-                self.refreshPins()
                 spinner?.hide(vc: self)
             }
         }
 
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "pin")
 
- //       refreshPins()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,12 +57,14 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
             pinView!.canShowCallout = true
             pinView!.annotation = annotation
             pinView!.pinTintColor = .red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         
         return pinView
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print(control)
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
             print ("about to open pin URL")
@@ -71,6 +72,15 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
                 print ("opening pin URL")
                 app.open(URL(string:toOpen)!,options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: nil)
             }
+        }
+    }
+    
+    func errorAlert (message: String) {
+        performUIUpdatesOnMain () {
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
     }
     

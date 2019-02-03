@@ -21,18 +21,18 @@ class MapTabBarController:     UITabBarController {
     
     print("in refresh data")
     spinner?.show(vc: self)
-    ParseClient.sharedInstance().loadPinData() { (success, errorString) in
+    ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
         performUIUpdatesOnMain () {
+            
             if success {
                 print("success refresh")
                 studentDataModified = true
                 for vc in self.viewControllers! as [UIViewController] {
                     vc.viewWillAppear(true)
                 }
-    //               performUIUpdatesOnMain () {
-    //                  self.performSegue(withIdentifier: "navSegue", sender: self)
-    //               }
+                spinner?.hide(vc: self)
             }else{
+                spinner?.hide(vc: self)
                 print(errorString)
     //              performUIUpdatesOnMain () {
     //                  let alert = UIAlertController(title: nil, message: "Failed download of student locations", preferredStyle: .alert)
@@ -41,7 +41,6 @@ class MapTabBarController:     UITabBarController {
     //                   self.present(alert, animated: true)
                 }
             }
-            spinner?.hide(vc: self)
         }
     }
 }

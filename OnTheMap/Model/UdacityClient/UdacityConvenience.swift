@@ -61,13 +61,13 @@ extension UdacityClient {
                 if let userDict = results as? NSDictionary {
                     if let emailDict = userDict[UdacityClient.JSONResponseKeys.UserEmail] as? NSDictionary {
                         
-                        userinfo = UserInfo(FirstName: userDict[UdacityClient.JSONResponseKeys.UserFirstName] as! String,
+                        userInfo = UserInfo(FirstName: userDict[UdacityClient.JSONResponseKeys.UserFirstName] as! String,
                                                 LastName: userDict[UdacityClient.JSONResponseKeys.UserLastName] as! String,
                                                 emailAddress: emailDict[UdacityClient.JSONResponseKeys.UserEmailAddr] as! String)
                         
-                        print(userinfo?.FirstName ?? "")
-                        print(userinfo?.LastName ?? "")
-                        print(userinfo?.emailAddress ?? "")
+                        print(userInfo?.FirstName ?? "")
+                        print(userInfo?.LastName ?? "")
+                        print(userInfo?.emailAddress ?? "")
                         completionHandlerForUserData(true, nil)
                     }
                 } else {
