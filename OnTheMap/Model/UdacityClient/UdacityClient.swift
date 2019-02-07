@@ -44,14 +44,11 @@ class UdacityClient : NSObject {
     }
     
     
-    
     func taskForPOSTMethod(_ method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-//        var parametersWithAPIKey = parameters
         
-//        parametersWithAPIKey[ParameterKeys.APIKey] = Constants.APIKey as AnyObject
-    
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
+
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -59,26 +56,22 @@ class UdacityClient : NSObject {
     
         let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
             guard (error == nil) else {
-                print (error?.localizedDescription)
-                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unkown error", code: 1 , userInfo: nil))
-   //             completionHandlerForPOST("Failed POST method" as AnyObject, error)
-                 print("error in request POST method")
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in post", code: 1 , userInfo: nil))
                 return
             }
             
+
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print((response as? HTTPURLResponse)?.statusCode)
                 switch (response as? HTTPURLResponse)?.statusCode {
                     case 403:
                         completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "Login failed invalid userid/password", code: 1 , userInfo: nil))
                         return
                     
                     default:
-                        print("error request returned status other than 2xx!",(response as? HTTPURLResponse)?.statusCode as Any)
+                
+                        completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
+                        return
                 }
-                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "POST Method", code: 1 , userInfo: nil))
-                print("error request returned status other than 2xx!",(response as? HTTPURLResponse)?.statusCode as Any)
-                return
             }
             
             guard let data = data else {
@@ -94,15 +87,15 @@ class UdacityClient : NSObject {
         return task
     }
     
-    func taskForDELETEMethod(_ method: String, parameters: [String: AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    
+    func taskForDELETEMethod(_ method: String, parameters: [String: AnyObject], completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
     
         var xsrfCookie: HTTPCookie? = nil
-
- //       var request = URLRequest(url: URL(string: method)!)
+        
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
+        request.httpMethod = "DELETE"
         
         let sharedCookieStorage = HTTPCookieStorage.shared
-        
         for cookie in sharedCookieStorage.cookies! {
             if cookie.name == "XSRF-TOKEN" {
                 xsrfCookie = cookie
@@ -110,25 +103,30 @@ class UdacityClient : NSObject {
         }
         
         if let xsrfCookie = xsrfCookie {
-            print("session")
-            print(xsrfCookie)
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
         
         let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
-            if error != nil {
-                // handle error
-                print ("session delete error")
-                print (error.debugDescription)
+            
+            guard (error == nil) else {
+                completionHandlerForDELETE("Failed POST method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in post", code: 1 , userInfo: nil))
                 return
+            }
+
+            guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                
+                completionHandlerForDELETE("Failed DELETE method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
+                return
+               
             }
             
             guard let data = data else {
                 print("error: no data returned by POST")
                 return
             }
-            print(data)
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForDELETE)
+
         }
         
         task.resume()
@@ -147,7 +145,9 @@ class UdacityClient : NSObject {
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         }catch{
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            print("error Could not parse the data as JSON")
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            return
         }
         completionHandlerForConvertData(parsedResult, nil)
     }
@@ -161,10 +161,11 @@ class UdacityClient : NSObject {
         components.queryItems = [URLQueryItem]()
         
         for (key,value) in parameters {
+
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-       // print(components.url!)
+
         return components.url!
     }
 

@@ -11,7 +11,6 @@ extension ParseClient {
     struct Constants {
         static let AppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-        
         static let APIScheme = "https"
         static let APIHost = "parse.udacity.com"
         static let APIPath = "/parse/classes"
@@ -27,12 +26,7 @@ extension ParseClient {
         static let skip = "skip"
         static let order = "order"
         static let sqlwhere = "where"
-        
         static let objectid =  "objectid"
-    }
-    
-    struct JSONBodyKeys {
-        
     }
     
     struct JSONResponseKeys {

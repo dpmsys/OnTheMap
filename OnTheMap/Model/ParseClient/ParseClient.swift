@@ -18,7 +18,7 @@ class ParseClient : NSObject {
     func taskForGETMethod(_ method: String, parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url)
+        print(request.url!)
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
@@ -30,7 +30,7 @@ class ParseClient : NSObject {
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("your GET request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode)
+                print((response as? HTTPURLResponse)?.statusCode as Any) 
                 return
             }
             
@@ -52,7 +52,7 @@ class ParseClient : NSObject {
         
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url)
+        print(request.url!)
         request.httpMethod = "POST"
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -69,7 +69,7 @@ class ParseClient : NSObject {
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("error request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode)
+                print((response as? HTTPURLResponse)?.statusCode as Any)
                 return
             }
             
@@ -94,7 +94,7 @@ class ParseClient : NSObject {
         var method = method
         method += "/" + (parameters[ParseClient.JSONResponseKeys.StudentObjectId] as! String)
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url)
+        print(request.url!)
         request.httpMethod = "PUT"
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -111,7 +111,7 @@ class ParseClient : NSObject {
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("error request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode)
+                print((response as? HTTPURLResponse)?.statusCode as Any)
                 return
             }
             

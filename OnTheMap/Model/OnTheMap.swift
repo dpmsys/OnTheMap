@@ -10,6 +10,7 @@ import MapKit
 
 var sessionID: String? = nil
 var userID: String? = nil
+var accountID: String? = nil
 var MapPoints: MKPointAnnotation?
 var studentDataModified: Bool = false
 var spinner: SpinnerViewController?
@@ -40,7 +41,7 @@ struct StudentInformation {
         self.latitude = 0.0
         self.longitude = 0.0
         self.mapString = ""
-        self.mediaURL = ""
+        self.mediaURL = "[No URL]"
         self.objectId = ""
         self.uniqueKey = ""
         self.updatedAt = ""
@@ -54,7 +55,7 @@ struct StudentInformation {
         self.latitude = userdict[ParseClient.JSONResponseKeys.StudentLatitude]  as? Double ?? 0
         self.longitude = userdict[ParseClient.JSONResponseKeys.StudentLongitude] as? Double ?? 0
         self.mapString = userdict[ParseClient.JSONResponseKeys.StudentMapString] as? String ?? ""
-        self.mediaURL = userdict[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? ""
+        self.mediaURL = userdict[ParseClient.JSONResponseKeys.StudentMediaURL] as? String ?? "[No URL]"
         self.objectId = userdict[ParseClient.JSONResponseKeys.StudentObjectId] as? String ?? ""
         self.uniqueKey = userdict[ParseClient.JSONResponseKeys.StudentUniqueKey] as? String ?? ""
         self.updatedAt = userdict[ParseClient.JSONResponseKeys.StudentUpdated] as? String ?? ""

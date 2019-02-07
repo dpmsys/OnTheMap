@@ -36,7 +36,6 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         self.linkURL.delegate = self
         let firstname = (userInfo?.FirstName)! + "(Dave)"
         parameters["firstName"] = firstname as AnyObject
-        //        parameters["firstName"] = "(Dave)" as AnyObject
         parameters["lastName"] = userInfo?.LastName as AnyObject
 
         ParseClient.sharedInstance().getStudentLocation(studentInfo: parameters) {(success, errorString) in
@@ -73,12 +72,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         var parameters = [String : AnyObject] ()
         var annotation: MKAnnotation?
         
- //       if location.text == "" {
-  //          location.text = "New York, NY"
-  //      }
- //       if linkURL.text == "" {
- //           linkURL.text = "http://cnn.com"
-//        }
+
         
         parameters["uniqueKey"] = sessionID as AnyObject
         let firstname = (userInfo?.FirstName)! + "(Dave)"
@@ -142,7 +136,11 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         
         let geocoder = CLGeocoder()
         
-        geocoder.geocodeAddressString(location.text ?? "New York, NY", completionHandler: {(placeMarks, error)->Void in
+        if !(linkURL.text?.hasPrefix("http://"))! {
+            linkURL.text = "http://" + (linkURL.text ?? "")
+        }
+        
+        geocoder.geocodeAddressString(location.text!, completionHandler: {(placeMarks, error)->Void in
             
             var loc: CLLocation?
             var coordinate: CLLocationCoordinate2D
@@ -172,6 +170,9 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
                     self.location.resignFirstResponder( )
                     self.linkURL.resignFirstResponder()
                 }
+                
+            }else{
+                self.errorAlert(message: "geocoding failed for \(self.location.text ?? " ")")
             }
         })
     }
@@ -209,16 +210,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
             }
         }
     }
-    
-    func errorAlert (message: String) {
-        performUIUpdatesOnMain () {
-            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
-        }
-    }
-    
+       
     func popView(_ action: UIAlertAction) {
         performUIUpdatesOnMain () {
             //                (self.parent as! MapViewController).refreshPins()

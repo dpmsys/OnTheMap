@@ -19,19 +19,12 @@ extension UdacityClient {
         static let Session = "/session"
     }
 
-    struct ParameterKeys {
-
-    }
-    
-    struct JSONBodyKeys {
-        
-    }
-
     struct JSONResponseKeys {
         static let Account = "account"
         static let AccountKey = "key"
         static let Session = "session"
         static let SessionID = "id"
+        static let Expiration = "expiration"
   
         static let User = ""
         static let UserFirstName = "first_name"

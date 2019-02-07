@@ -37,12 +37,14 @@ extension ParseClient {
                 
                 if let student = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
                     
-                    print(results)
+                    print(results!)
                     print("student")
                     print(student)
                     print("student")
                     if student.count != 0 {
                         studentLocation = StudentInformation(userdict: student[0])
+                    }else{
+                        studentLocation = StudentInformation(userdict: [ : ])
                     }
                     completionHandlerForGetStudent(true, nil)
                 } else {
@@ -75,6 +77,7 @@ extension ParseClient {
                     for student in studentsDict {
                         Students.append(StudentInformation(userdict: student))
                     }
+                    studentDataModified = true
                     completionHandlerForPinData(true, nil)
                 } else {
                     print ("Could not find student data in response")
@@ -88,16 +91,10 @@ extension ParseClient {
     
     func postStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
-//        print ("posting student")
-        var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMapString)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMapString] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMediaURL)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMediaURL] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLatitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLatitude] ?? "" as AnyObject), "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLongitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLongitude] ?? "" as AnyObject)}"
+        print ("posting student")
+        var jsonBody = buildStudentJSONBody(studentInfo: studentInfo)
         
- //       print(jsonBody)
+        print(jsonBody)
         
         let _ = taskForPOSTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
@@ -115,14 +112,10 @@ extension ParseClient {
     
     func putStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
-        var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMapString)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMapString] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMediaURL)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMediaURL] ?? "" as AnyObject)\", "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLatitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLatitude] ?? "" as AnyObject), "
-        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLongitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLongitude] ?? "" as AnyObject)}"
-
+        print ("putting student")
+        let jsonBody = buildStudentJSONBody(studentInfo: studentInfo)
+        print(jsonBody)
+        
         let _ = taskForPUTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
                 completionHandlerForPostStudent(false, error.localizedDescription)
@@ -135,6 +128,19 @@ extension ParseClient {
                 
             }
         }
-
+    }
+        
+    func buildStudentJSONBody (studentInfo: [String:AnyObject]) -> String {
+    
+        var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMapString)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMapString] ?? "" as AnyObject)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMediaURL)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMediaURL] ?? "" as AnyObject)\", "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLatitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLatitude] ?? "" as AnyObject), "
+        jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLongitude)\": \(studentInfo[ParseClient.JSONResponseKeys.StudentLongitude] ?? "" as AnyObject)}"
+        
+        return jsonBody
+        
     }
 }

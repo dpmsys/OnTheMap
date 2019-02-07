@@ -292,12 +292,9 @@
                                     <outlet property="delegate" destination="nXH-z0-o9y" id="Blu-t3-aDa"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uND-rD-gc4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uND-rD-gc4">
                                 <rect key="frame" x="51" y="603" width="273" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="273" id="L3A-un-CAW"/>
-                                </constraints>
                                 <state key="normal" title="Finish">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -310,7 +307,7 @@
                         <constraints>
                             <constraint firstItem="uND-rD-gc4" firstAttribute="leading" secondItem="VJM-Rm-tSZ" secondAttribute="leading" id="7Gt-8P-Fpm"/>
                             <constraint firstItem="VJM-Rm-tSZ" firstAttribute="width" secondItem="pjy-qb-pmU" secondAttribute="width" id="7nV-K9-Bvj"/>
-                            <constraint firstItem="zKe-zP-eYn" firstAttribute="baseline" secondItem="uND-rD-gc4" secondAttribute="firstBaseline" constant="41.5" id="8Np-Rk-Vtg"/>
+                            <constraint firstItem="zKe-zP-eYn" firstAttribute="baseline" secondItem="uND-rD-gc4" secondAttribute="firstBaseline" constant="43.5" id="8Np-Rk-Vtg"/>
                             <constraint firstItem="zKe-zP-eYn" firstAttribute="leading" secondItem="MPu-Mr-1nQ" secondAttribute="leading" id="8vU-qS-CTn"/>
                             <constraint firstItem="zKe-zP-eYn" firstAttribute="top" secondItem="zSj-Rl-w0j" secondAttribute="top" id="MNa-oE-cY1"/>
                             <constraint firstItem="VJM-Rm-tSZ" firstAttribute="centerX" secondItem="zSj-Rl-w0j" secondAttribute="centerX" id="O8H-8i-Y29"/>

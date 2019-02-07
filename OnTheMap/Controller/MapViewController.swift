@@ -29,7 +29,6 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
 
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "pin")
 
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +38,8 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         print ("mapview viewWillAppear refreshing pins")
         refreshPins()
     }
+    
+    // MapViewDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -64,25 +65,19 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(control)
+
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
-            print ("about to open pin URL")
             if let toOpen = view.annotation?.subtitle! {
-                print ("opening pin URL")
-                app.open(URL(string:toOpen)!,options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: nil)
+                app.open(URL(string:toOpen)!,options: [ : ], completionHandler: { (success) in
+                    if (!success) {
+                        self.errorAlert(message: "Invalid URL: \(toOpen)")
+                    }
+                })
             }
         }
     }
     
-    func errorAlert (message: String) {
-        performUIUpdatesOnMain () {
-            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
-        }
-    }
     
     func refreshPins() {
         
@@ -113,6 +108,6 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
-}
+//fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+//	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+//}

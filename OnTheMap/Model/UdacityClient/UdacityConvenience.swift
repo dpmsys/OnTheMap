@@ -13,51 +13,41 @@ extension UdacityClient {
     func getAccountSessionID (username: String, password: String, _ completionHandlerForSession: @escaping (_ success: Bool, _ accountID: String?, _ errorString: String?) -> Void) {
         
         let parameters = [String:AnyObject] ()
-        let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"K1ssB4uG0\"}}"
+    //    let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"\"}}"
+        let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"\(password)\"}}"
    //     let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
         
         let _ = taskForPOSTMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
-            
+                    
             if let error = error {
-        //        print (error)
-        //        print ("failed login 1")
                 completionHandlerForSession(false, nil, error.domain)
             } else {
-                
                 if let account = results?[JSONResponseKeys.Account] as? NSDictionary,
                     let session = results?[JSONResponseKeys.Session] as? NSDictionary,
                     let accountID = account[JSONResponseKeys.AccountKey] as? String,
-                    let sessionID = session[JSONResponseKeys.SessionID] as? String {
+                    let _ = session[JSONResponseKeys.SessionID] as? String {            //sessionID
                 
-                    print("sessionID = \(sessionID)")
                     completionHandlerForSession(true, accountID, nil)
                 } else {
-                    print ("Could not find account ID in response")
-                    completionHandlerForSession(false, nil, "Login fail (Post Session)")
+                    completionHandlerForSession(false, nil, "Could not find account ID in response")
                 }
             }
         }
     }
     
-    func getPublicUserData (_ userid: String, _ completionHandlerForUserData: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
-        
-        //      var urlstr: String = MAPClient.Constants.APIScheme
-        //      urlstr.append("//:")
-        //      urlstr.append(MAPClient.Methods.Session)
+    func getPublicUserData (_ accountId: String, _ completionHandlerForUserData: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         let parameters = [String:AnyObject] ()
         var urlstr: String = UdacityClient.Methods.Users
-        urlstr.append(userid)
+        urlstr.append(accountId)
         
-        //print(urlstr)
         let _ = taskForGETMethod(urlstr, parameters: parameters as [String:AnyObject]) { (results, error) in
             
             if let error = error {
-                print (error)
-                completionHandlerForUserData(false, "Get userdata fail (Post session)")
+                completionHandlerForUserData(false, "Get userdata fail: \(error.domain)")
             } else {
-                //print(results)
-                //?[UdacityClient.JSONResponseKeys.User]
+                print(results)
+                print([UdacityClient.JSONResponseKeys.User])
                 if let userDict = results as? NSDictionary {
                     if let emailDict = userDict[UdacityClient.JSONResponseKeys.UserEmail] as? NSDictionary {
                         
@@ -65,27 +55,31 @@ extension UdacityClient {
                                                 LastName: userDict[UdacityClient.JSONResponseKeys.UserLastName] as! String,
                                                 emailAddress: emailDict[UdacityClient.JSONResponseKeys.UserEmailAddr] as! String)
                         
-                        print(userInfo?.FirstName ?? "")
-                        print(userInfo?.LastName ?? "")
-                        print(userInfo?.emailAddress ?? "")
                         completionHandlerForUserData(true, nil)
                     }
                 } else {
-                    print ("Could not find account ID in response", results as Any)
-                    completionHandlerForUserData(false, "Login fail (Post Session)")
+                    completionHandlerForUserData(false, "Getuser data fail: no data returned")
                 }
             }
         }
     }
     
-    func logout () {
+    func logout (_ completionHandlerForLogout: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
-        let parameters = [String:AnyObject] ()
-        let _ = taskForDELETEMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject]) { (results, error) in
-            if error != nil {
-                print("logout failed")
+        let _ = taskForDELETEMethod(UdacityClient.Methods.Session, parameters: [ : ]) { (results, error) in
+            
+            if let error = error {
+                completionHandlerForLogout(false, "Logout failed: \(error.domain)")
             }else{
-                print("logout successful")
+                if let sessionDict = results?[JSONResponseKeys.Session] as? NSDictionary,
+                    let sessionID = sessionDict[JSONResponseKeys.SessionID] as? String,
+                    let expiration = sessionDict[JSONResponseKeys.Expiration] as? String {            //sessionID
+
+                    completionHandlerForLogout(true, nil)
+                    
+                } else {
+                    completionHandlerForLogout(false, "Getuser data fail: no data returned")
+                }
             }
         }
     }
