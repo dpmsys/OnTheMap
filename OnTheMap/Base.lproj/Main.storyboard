@@ -107,7 +107,10 @@
                                 <rect key="frame" x="109" y="244" width="163" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <connections>
+                                    <outlet property="delegate" destination="0Wg-F9-g3v" id="qmj-Gh-HcH"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tnd-Ct-pIW">
                                 <rect key="frame" x="109" y="353" width="163" height="30"/>
@@ -123,7 +126,10 @@
                                 <rect key="frame" x="109" y="297" width="163" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" textContentType="password"/>
+                                <connections>
+                                    <outlet property="delegate" destination="0Wg-F9-g3v" id="nrt-M1-pGs"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLy-Cx-Pbg">
                                 <rect key="frame" x="265" y="402" width="52" height="30"/>
@@ -330,6 +336,7 @@
                     <navigationItem key="navigationItem" title="Add Location" id="NRA-kP-Iig"/>
                     <connections>
                         <outlet property="addMap" destination="zKe-zP-eYn" id="H2U-G5-wAv"/>
+                        <outlet property="finishButton" destination="uND-rD-gc4" id="B4T-ob-zz6"/>
                         <outlet property="linkURL" destination="5Pv-gt-XNa" id="b3n-et-M1r"/>
                         <outlet property="location" destination="pjy-qb-pmU" id="2Ut-YU-ru9"/>
                     </connections>

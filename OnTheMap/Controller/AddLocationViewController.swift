@@ -14,6 +14,7 @@ import MapKit
 
 class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var finishButton: UIButton!
     @IBOutlet weak var location: UITextField!
     @IBOutlet weak var linkURL: UITextField!
     @IBOutlet weak var addMap: MKMapView!
@@ -25,6 +26,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         
         super.viewDidLoad()
         
+        finishButton.isHidden = true
         addMap.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: "addpin")
         
         objectId = ""
@@ -56,6 +58,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     func textFieldShouldReturn(_ userText: UITextField) -> Bool {
+        
         userText.resignFirstResponder()
         return true;
     }
@@ -132,11 +135,13 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
             linkURL.text = "http://" + (linkURL.text ?? "")
         }
         
+        spinner!.show(vc: self)
         geocoder.geocodeAddressString(location.text!, completionHandler: {(placeMarks, error)->Void in
             
             var loc: CLLocation?
             var coordinate: CLLocationCoordinate2D
 
+            spinner!.hide(vc: self)
             if let error = error {
                 print (error)
             }
@@ -157,6 +162,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
  
                     self.addMap.addAnnotation(newMark)
                     self.addMap.isHidden = false
+                    self.finishButton.isHidden = false
                     
                     // dismiss the keyboard in case it's still there.
                     self.location.resignFirstResponder( )
@@ -183,9 +189,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
         }else{
-    //        pinView!.canShowCallout = true
             pinView!.annotation = annotation
- //           pinView!.pinTintColor = .red
         }
         
         return pinView
@@ -203,7 +207,6 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
        
     func popView(_ action: UIAlertAction) {
         performUIUpdatesOnMain () {
-            //                (self.parent as! MapViewController).refreshPins()
             self.navigationController?.popViewController(animated: true)
         }
     }
