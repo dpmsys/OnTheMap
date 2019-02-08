@@ -13,9 +13,8 @@ extension UdacityClient {
     func getAccountSessionID (username: String, password: String, _ completionHandlerForSession: @escaping (_ success: Bool, _ accountID: String?, _ errorString: String?) -> Void) {
         
         let parameters = [String:AnyObject] ()
-    //    let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"\"}}"
-        let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"\(password)\"}}"
-   //     let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
+
+        let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
         
         let _ = taskForPOSTMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
                     
@@ -46,8 +45,6 @@ extension UdacityClient {
             if let error = error {
                 completionHandlerForUserData(false, "Get userdata fail: \(error.domain)")
             } else {
-                print(results)
-                print([UdacityClient.JSONResponseKeys.User])
                 if let userDict = results as? NSDictionary {
                     if let emailDict = userDict[UdacityClient.JSONResponseKeys.UserEmail] as? NSDictionary {
                         
@@ -72,8 +69,8 @@ extension UdacityClient {
                 completionHandlerForLogout(false, "Logout failed: \(error.domain)")
             }else{
                 if let sessionDict = results?[JSONResponseKeys.Session] as? NSDictionary,
-                    let sessionID = sessionDict[JSONResponseKeys.SessionID] as? String,
-                    let expiration = sessionDict[JSONResponseKeys.Expiration] as? String {            //sessionID
+                    let _ = sessionDict[JSONResponseKeys.SessionID] as? String,
+                    let _ = sessionDict[JSONResponseKeys.Expiration] as? String {            //sessionID
 
                     completionHandlerForLogout(true, nil)
                     

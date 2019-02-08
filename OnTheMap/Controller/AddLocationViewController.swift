@@ -31,20 +31,15 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         var parameters = [String : AnyObject] ()
         
         self.navigationItem.leftBarButtonItem?.title = "Cancel"
-        print ("addlocation loaded")
         self.location.delegate = self
         self.linkURL.delegate = self
-        let firstname = (userInfo?.FirstName)! + "(Dave)"
-        parameters["firstName"] = firstname as AnyObject
+        parameters["firstName"] = userInfo?.FirstName as AnyObject
         parameters["lastName"] = userInfo?.LastName as AnyObject
 
         ParseClient.sharedInstance().getStudentLocation(studentInfo: parameters) {(success, errorString) in
             if success {
-                print("get student success")
-                print(studentLocation)
                 if (studentLocation.objectId != "") {  //pre-existing
                     self.objectId = studentLocation.objectId
-                    print(self.objectId)
                     var message = "User \"" + studentLocation.firstName + " " + studentLocation.lastName + "\"has already posted a student location. "
                     message += "Would you like to overwrite their location?"
                     performUIUpdatesOnMain () {
@@ -72,12 +67,8 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         var parameters = [String : AnyObject] ()
         var annotation: MKAnnotation?
         
-
-        
         parameters["uniqueKey"] = sessionID as AnyObject
-        let firstname = (userInfo?.FirstName)! + "(Dave)"
-        parameters["firstName"] = firstname as AnyObject
-//        parameters["firstName"] = "(Dave)" as AnyObject
+        parameters["firstName"] = userInfo?.FirstName as AnyObject
         parameters["lastName"] = userInfo?.LastName as AnyObject
         parameters["mapString"] = location.text as AnyObject
         parameters["mediaURL"] = linkURL.text as AnyObject
@@ -86,12 +77,12 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         parameters["longitude"] = annotation?.coordinate.longitude as AnyObject
         parameters["objectId"] = studentLocation.objectId as AnyObject
         
-        print (parameters)
-        
         spinner!.show(vc: self)
         if (studentLocation.objectId == "") {
             ParseClient.sharedInstance().postStudent(studentInfo: parameters) {(success, errorstring) in
+                spinner!.hide(vc: self)
                 if success {
+                    spinner!.show(vc: self)
                     ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
                         
                         spinner!.hide(vc: self)
@@ -132,6 +123,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     
+    
     @IBAction func findLocation(_ sender: Any) {
         
         let geocoder = CLGeocoder()
@@ -154,7 +146,7 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
             
                 if let loc = loc {
                     coordinate = loc.coordinate
-                    print ("I'm here", coordinate.latitude,coordinate.longitude)
+ 
                     let newMark = MKPointAnnotation()
 
                     let region = MKCoordinateRegion(center: coordinate,latitudinalMeters: 10000,longitudinalMeters: 10000)
@@ -200,12 +192,10 @@ class AddLocationViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(control)
+
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
-            print ("about to open pin URL")
             if let toOpen = view.annotation?.subtitle! {
-                print ("opening pin URL")
                 app.open(URL(string:toOpen)!,options: [:], completionHandler: nil)
             }
         }

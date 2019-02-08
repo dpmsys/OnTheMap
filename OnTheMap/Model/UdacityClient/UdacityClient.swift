@@ -5,6 +5,7 @@
 //  Created by David Mulvihill on 6/26/18.
 //  Copyright © 2018 David Mulvihill. All rights reserved.
 //
+// Class for handling HTTP methods for Udacity REST API
 
 import Foundation
 
@@ -22,17 +23,17 @@ class UdacityClient : NSObject {
   
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             guard (error == nil) else {
-                print ("Error with GET request")
+                      completionHandlerForGET("Failed GET method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in get", code: 1 , userInfo: nil))
                 return
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print("your GET request returned status other than 2xx!")
+                completionHandlerForGET("Failed POST method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
                 return
             }
             
             guard let data = data else {
-                print("No data was returned by GET")
+                completionHandlerForGET("Failed POST method" as AnyObject, NSError(domain: "No data returned by POST", code: 1 , userInfo: nil))
                 return
             }
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)            
@@ -60,7 +61,6 @@ class UdacityClient : NSObject {
                 return
             }
             
-
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 switch (response as? HTTPURLResponse)?.statusCode {
                     case 403:
@@ -75,7 +75,7 @@ class UdacityClient : NSObject {
             }
             
             guard let data = data else {
-                print("error: no data returned by POST")
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "No data returned by POST", code: 1 , userInfo: nil))
                 return
             }
             
@@ -121,7 +121,7 @@ class UdacityClient : NSObject {
             }
             
             guard let data = data else {
-                print("error: no data returned by POST")
+                completionHandlerForDELETE("Failed POST method" as AnyObject, NSError(domain: "No data returned by DELETE", code: 1 , userInfo: nil))
                 return
             }
             
@@ -145,7 +145,6 @@ class UdacityClient : NSObject {
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         }catch{
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            print("error Could not parse the data as JSON")
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
             return
         }

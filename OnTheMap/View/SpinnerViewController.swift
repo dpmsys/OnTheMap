@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+//
+// view controller for showing activity indicator
+//
 
 class SpinnerViewController: UIViewController {
     var spinner = UIActivityIndicatorView(style: .whiteLarge)

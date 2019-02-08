@@ -10,6 +10,9 @@ import Foundation
 
 extension ParseClient {
     
+    //
+    // get specific student by first and last name lookup to determine if our location is already posted
+    //
     
     func getStudentLocation(studentInfo: [String:AnyObject], _ completionHandlerForGetStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
@@ -18,29 +21,17 @@ extension ParseClient {
         
         whereclause = String(format: "%@%@%@","{\"firstName\":\"",studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] as! String,"\",")
         whereclause += String(format: "%@%@%@", "\"lastName\":\"",studentInfo[ParseClient.JSONResponseKeys.StudentLastName] as! String,"\"}")
-        print (whereclause)
-//        whereclause = whereclause.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
- //       print (whereclause)
+
         parameters[ParseClient.ParameterKeys.sqlwhere] = whereclause as AnyObject
         
         let urlstr: String = ParseClient.Methods.StudentLocation
         
         let _ = taskForGETMethod(urlstr, parameters: parameters as [String:AnyObject]) { (results, error) in
             
-            if let error = error {
-                print (error)
-                completionHandlerForGetStudent(false, "Get PinData fail (GET session)")
+            if error != nil {
+                completionHandlerForGetStudent(false, "Get student location failed")
             } else {
-                //                print(userinfo?.FirstName)
-                //               print(userinfo?.LastName)
-                //               print(userinfo?.emailAddress)
-                
                 if let student = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
-                    
-                    print(results!)
-                    print("student")
-                    print(student)
-                    print("student")
                     if student.count != 0 {
                         studentLocation = StudentInformation(userdict: student[0])
                     }else{
@@ -48,13 +39,15 @@ extension ParseClient {
                     }
                     completionHandlerForGetStudent(true, nil)
                 } else {
-                    print ("Could not find student data in response")
-                    completionHandlerForGetStudent(false, "PinData fail (GET Session)")
+                    completionHandlerForGetStudent(false, "Get student location failed")
                 }
             }
         }
     }
 
+    //
+    // get all stucent locations to show pins on map
+    //
 
     func getStudentLocations(_ completionHandlerForPinData: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
@@ -66,13 +59,12 @@ extension ParseClient {
         
         let _ = taskForGETMethod(urlstr, parameters: parameters as [String:AnyObject]) { (results, error) in
             
-            if let error = error {
-                print (error)
-                completionHandlerForPinData(false, "Get PinData fail (GET session)")
+            if error != nil {
+                completionHandlerForPinData(false, "Get student locations failed")
             } else {
 
                 if let studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
-                    print("loading students array")
+ 
                     Students.removeAll()
                     for student in studentsDict {
                         Students.append(StudentInformation(userdict: student))
@@ -80,56 +72,51 @@ extension ParseClient {
                     studentDataModified = true
                     completionHandlerForPinData(true, nil)
                 } else {
-                    print ("Could not find student data in response")
-                    completionHandlerForPinData(false, "PinData fail (GET Session)")
+                    completionHandlerForPinData(false, "Get student locations failed")
                 }
             }
         }
     }
     
 
-    
+    //
+    // post new student location information when not previously posted
+    //
     func postStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
-        print ("posting student")
-        var jsonBody = buildStudentJSONBody(studentInfo: studentInfo)
-        
-        print(jsonBody)
+
+        let jsonBody = buildStudentJSONBody(studentInfo: studentInfo)
         
         let _ = taskForPOSTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
                 completionHandlerForPostStudent(false, error.localizedDescription)
- //               print (error)
             } else {
-//                print("results")
- //               print(results)
-//                print("results")
                 completionHandlerForPostStudent(true, nil)
-           
             }
         }
     }
     
+    //
+    // put to update student location information when previously posted.
+    //
     func putStudent(studentInfo: [String:AnyObject], _ completionHandlerForPostStudent: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
-        print ("putting student")
+ 
         let jsonBody = buildStudentJSONBody(studentInfo: studentInfo)
-        print(jsonBody)
         
         let _ = taskForPUTMethod(ParseClient.Methods.StudentLocation, parameters: studentInfo, jsonBody: jsonBody) { (results, error) in
             if let error = error {
                 completionHandlerForPostStudent(false, error.localizedDescription)
-                //               print (error)
             } else {
-                //                print("results")
-                //               print(results)
-                //                print("results")
                 completionHandlerForPostStudent(true, nil)
-                
             }
         }
     }
-        
+    
+    //
+    // Fill JSON body from studentInfo struct for PUT/POST of student location
+    //
+    
     func buildStudentJSONBody (studentInfo: [String:AnyObject]) -> String {
     
         var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "

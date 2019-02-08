@@ -5,6 +5,7 @@
 //  Created by David Mulvihill on 7/3/18.
 //  Copyright © 2018 David Mulvihill. All rights reserved.
 //
+// class for handling HTTP methods for PARSE 
 
 import Foundation
 class ParseClient : NSObject {
@@ -18,24 +19,23 @@ class ParseClient : NSObject {
     func taskForGETMethod(_ method: String, parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url!)
+
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             guard (error == nil) else {
-                print ("Error with GET request")
+                completionHandlerForGET("Failed GET method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in get", code: 1 , userInfo: nil))
                 return
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print("your GET request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode as Any) 
+                completionHandlerForGET("Failed GET method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
                 return
             }
             
             guard let data = data else {
-                print("No data was returned by GET")
+                completionHandlerForGET("Failed POST method" as AnyObject, NSError(domain: "No data returned by GET", code: 1 , userInfo: nil))
                 return
             }
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
@@ -52,35 +52,31 @@ class ParseClient : NSObject {
         
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url!)
         request.httpMethod = "POST"
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        print(jsonBody)
         request.httpBody = jsonBody.data(using: .utf8)
 
         
         let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
             guard (error == nil) else {
-                print("error in request POST method")
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in post", code: 1 , userInfo: nil))
                 return
             }
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print("error request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode as Any)
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
                 return
             }
             
             guard let data = data else {
-                print("error: no data returned by POST")
+                completionHandlerForPOST("Failed POST method" as AnyObject, NSError(domain: "No data returned by POST", code: 1 , userInfo: nil))
                 return
             }
             
-            print(data)
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
-            print(data)
+
         }
         
         task.resume()
@@ -88,41 +84,36 @@ class ParseClient : NSObject {
         return task
     }
     
-    func taskForPUTMethod(_ method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPUTMethod(_ method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        print("in put method")
         var method = method
         method += "/" + (parameters[ParseClient.JSONResponseKeys.StudentObjectId] as! String)
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request.url!)
+
         request.httpMethod = "PUT"
         request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        print(jsonBody)
         request.httpBody = jsonBody.data(using: .utf8)
         
         
         let task = session.dataTask(with:  request as URLRequest) {(data, response, error) in
             guard (error == nil) else {
-                print("error in request POST method")
+                completionHandlerForPUT("Failed PUT method" as AnyObject, NSError(domain: error?.localizedDescription ?? "Unknown error in PUT", code: 1 , userInfo: nil))
                 return
             }
             
             guard let statusCode=(response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                print("error request returned status other than 2xx!")
-                print((response as? HTTPURLResponse)?.statusCode as Any)
+                completionHandlerForPUT("Failed PUT method" as AnyObject, NSError(domain: "Server returned status other than 2xx! - \((response as? HTTPURLResponse)?.statusCode ?? 10000)", code: 1 , userInfo: nil))
                 return
             }
             
             guard let data = data else {
-                print("error: no data returned by POST")
+                completionHandlerForPUT("Failed PUT method" as AnyObject, NSError(domain: "No data returned by PUT", code: 1 , userInfo: nil))
                 return
             }
             
-            print(data)
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
-            print(data)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPUT)
         }
         
         task.resume()
@@ -157,21 +148,6 @@ class ParseClient : NSObject {
         }
         return components.url!
     }
-    
-//    private func parseURLFromParameters2(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
-        
- //       var components = URLComponents()
- //       components.scheme = ParseClient.Constants.APIScheme
- //       components.host = ParseClient.Constants.APIHost
- //       components.path = ParseClient.Constants.APIPath + (withPathExtension ?? "")
- //       components.queryItems = [URLQueryItem]()
-        
- //       for (key,value) in parameters {
- //           let queryItem = URLQueryItem(name: key, value: "\(value)")
- //           components.queryItems!.append(queryItem)
- //       }
-  //      return components.url!
- //   }
     
     class func sharedInstance() -> ParseClient {
         struct Singleton {

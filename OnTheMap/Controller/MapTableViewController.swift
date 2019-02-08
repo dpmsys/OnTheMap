@@ -18,7 +18,7 @@ class MapTableViewController:  UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        print("maptable viewwillappear")
+
         if studentDataModified {
             studentDataModified = false
             self.tableView.reloadData()
@@ -53,20 +53,11 @@ class MapTableViewController:  UITableViewController {
         if let mediaURL = URL(string: Students[(indexPath as NSIndexPath).row].mediaURL) {
             app.open(mediaURL, options: [ : ]) { (success) in
                 if (!success) {
-                    let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(alert, animated: true)
+                    self.errorAlert(message: "Invalid Link")
                 }
             }
         } else {
-
-            let alert = UIAlertController(title: nil, message: "Invalid Link", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            
-            print("Media URL is nil")
+            self.errorAlert(message: "Invalid Link")
         }
     }
     

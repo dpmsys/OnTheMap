@@ -11,6 +11,10 @@ import UIKit
 
 extension UIViewController {
     
+    //
+    // output error messages via UIAlertController
+    //
+    
     func errorAlert(message: String) {
         
         performUIUpdatesOnMain () {

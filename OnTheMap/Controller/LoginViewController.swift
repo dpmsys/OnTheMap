@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         UdacityClient.sharedInstance().getAccountSessionID(username: email.text!, password: password.text!) { (success, accountId, errorString) in
             spinner?.hide(vc: self)
             if success {
-                print ("userkey = \(accountId!)")
+ //               print ("userkey = \(accountId!)")
                 spinner?.show(vc: self)
                 UdacityClient.sharedInstance().getPublicUserData(accountId!) { (success, errorString) in
                     spinner?.hide(vc: self)

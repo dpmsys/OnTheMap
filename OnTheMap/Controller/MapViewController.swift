@@ -35,7 +35,6 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         
         super.viewWillAppear(animated)
         
-        print ("mapview viewWillAppear refreshing pins")
         refreshPins()
     }
     
@@ -81,33 +80,25 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
     
     func refreshPins() {
         
-//        performUIUpdatesOnMain () {
-                    
-            print("refreshing PINs")
-            self.mapView.removeAnnotations(annotations)
-            annotations.removeAll()
+        self.mapView.removeAnnotations(annotations)
+        annotations.removeAll()
+        
+        for student in Students {
             
-            for student in Students {
-                
-                let lat = CLLocationDegrees(student.latitude)
-                let long = CLLocationDegrees(student.longitude)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(student.firstName) \(student.lastName)"
-                annotation.subtitle = student.mediaURL
-                
-                annotations.append(annotation)
+            let lat = CLLocationDegrees(student.latitude)
+            let long = CLLocationDegrees(student.longitude)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude:long)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(student.firstName) \(student.lastName)"
+            annotation.subtitle = student.mediaURL
+            
+            annotations.append(annotation)
 
-            }
-            self.mapView.addAnnotations(annotations)
-//            self.mapView.setNeedsDisplay()
-//        }
+        }
+        self.mapView.addAnnotations(annotations)
+
     }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-//fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-//	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
-//}
