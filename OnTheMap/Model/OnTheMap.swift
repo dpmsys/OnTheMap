@@ -9,7 +9,6 @@
 import MapKit
 
 var sessionID: String? = nil
-var userID: String? = nil
 var accountID: String? = nil
 var MapPoints: MKPointAnnotation?
 var studentDataModified: Bool = false
@@ -62,9 +61,9 @@ struct StudentInformation {
     }
 }
 
+
 var annotations = [MKPointAnnotation] ()
 var studentLocation = StudentInformation()
-var Students = [StudentInformation] ()
 
 var MapPins: [[String:Any]]!
 var userInfo: UserInfo?

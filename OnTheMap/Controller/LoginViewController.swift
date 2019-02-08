@@ -16,7 +16,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         spinner = SpinnerViewController()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     @IBAction func signup(_ sender: Any) {
@@ -63,8 +62,3 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
-
-// Helper function inserted by Swift 4.2 migrator.
-//fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-//	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
-//}

@@ -31,7 +31,7 @@ class MapTableViewController:  UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> MapTableViewCell {
         
         let CellReuseId = "userCell"
-        let student =  Students[(indexPath as NSIndexPath).row]
+        let student =  Students.sharedInstance.studentArray[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseId) as! MapTableViewCell?
         
         cell?.imageView?.image = UIImage(contentsOfFile: "icon_pin.png")
@@ -43,14 +43,14 @@ class MapTableViewController:  UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return Students.count
+        return Students.sharedInstance.studentArray.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
 
-        if let mediaURL = URL(string: Students[(indexPath as NSIndexPath).row].mediaURL) {
+        if let mediaURL = URL(string: Students.sharedInstance.studentArray[(indexPath as NSIndexPath).row].mediaURL) {
             app.open(mediaURL, options: [ : ]) { (success) in
                 if (!success) {
                     self.errorAlert(message: "Invalid Link")

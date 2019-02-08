@@ -83,7 +83,7 @@ class MapViewController:  UIViewController, MKMapViewDelegate {
         self.mapView.removeAnnotations(annotations)
         annotations.removeAll()
         
-        for student in Students {
+        for student in Students.sharedInstance.studentArray {
             
             let lat = CLLocationDegrees(student.latitude)
             let long = CLLocationDegrees(student.longitude)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0605FF85220E33690080A7F4 /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605FF84220E33690080A7F4 /* Students.swift */; };
 		064BA83D20E2638E009DF685 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA83C20E2638E009DF685 /* MapTableViewController.swift */; };
 		064BA83F20E26465009DF685 /* OnTheMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA83E20E26465009DF685 /* OnTheMap.swift */; };
 		064BA84120E26C23009DF685 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BA84020E26C23009DF685 /* UdacityConstants.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0605FF84220E33690080A7F4 /* Students.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
 		064BA83C20E2638E009DF685 /* MapTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewController.swift; sourceTree = "<group>"; };
 		064BA83E20E26465009DF685 /* OnTheMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMap.swift; sourceTree = "<group>"; };
 		064BA84020E26C23009DF685 /* UdacityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		06605CBB20E0467400F75C74 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0605FF84220E33690080A7F4 /* Students.swift */,
 				064BA83E20E26465009DF685 /* OnTheMap.swift */,
 				06A339E220EC4D5F002A7438 /* ParseClient */,
 				06605CC020E047D400F75C74 /* UdacityClient */,
@@ -496,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06605C9320E0464300F75C74 /* OnTheMap.xcdatamodeld in Sources */,
+				0605FF85220E33690080A7F4 /* Students.swift in Sources */,
 				064BA84520E83E8B009DF685 /* MapTabBarController.swift in Sources */,
 				06605C8D20E0464300F75C74 /* LoginViewController.swift in Sources */,
 				06605C8B20E0464300F75C74 /* AppDelegate.swift in Sources */,

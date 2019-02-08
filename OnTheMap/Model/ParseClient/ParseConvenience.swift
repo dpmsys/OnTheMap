@@ -65,9 +65,9 @@ extension ParseClient {
 
                 if let studentsDict = results?[ParseClient.JSONResponseKeys.Results] as! [Dictionary<String, Any>]? {
  
-                    Students.removeAll()
+                    Students.sharedInstance.studentArray.removeAll()
                     for student in studentsDict {
-                        Students.append(StudentInformation(userdict: student))
+                        Students.sharedInstance.studentArray.append(StudentInformation(userdict: student))
                     }
                     studentDataModified = true
                     completionHandlerForPinData(true, nil)
@@ -119,7 +119,7 @@ extension ParseClient {
     
     func buildStudentJSONBody (studentInfo: [String:AnyObject]) -> String {
     
-        var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(userID ?? "" as String)\", "
+        var jsonBody = "{\"\(ParseClient.JSONResponseKeys.StudentUniqueKey)\": \"\(accountID ?? "" as String)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentLastName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentLastName] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentFirstName)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentFirstName] ?? "" as AnyObject)\", "
         jsonBody = jsonBody + "\"\(ParseClient.JSONResponseKeys.StudentMapString)\": \"\(studentInfo[ParseClient.JSONResponseKeys.StudentMapString] ?? "" as AnyObject)\", "

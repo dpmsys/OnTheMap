@@ -140,7 +140,6 @@ class UdacityClient : NSObject {
         var parsedResult: AnyObject! = nil
         let range = 5..<data.count
         let newData = data.subdata(in: range)
-        //print(String(data: newData, encoding: .utf8)!)
         do {
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         }catch{

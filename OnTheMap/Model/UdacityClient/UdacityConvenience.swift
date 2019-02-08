@@ -14,8 +14,7 @@ extension UdacityClient {
         
         let parameters = [String:AnyObject] ()
 
-   //     let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
-        let jsonBody: String = "{\"udacity\":{\"username\":\"mulv2000@gmail.com\",\"password\":\"Bag3lN0sh\"}}"
+        let jsonBody: String = "{\"udacity\":{\"username\":\"\(username)\",\"password\":\"\(password)\"}}"
 
         let _ = taskForPOSTMethod(UdacityClient.Methods.Session, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
                     
